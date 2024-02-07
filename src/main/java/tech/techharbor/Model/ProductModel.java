@@ -1,10 +1,12 @@
 package tech.techharbor.Model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Objects;
 
 @Entity
+@Data
 @Table(name = "product", schema = "project", catalog = "db_202324z_va_prj_techharbor")
 public class ProductModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,68 +35,14 @@ public class ProductModel {
     @Column(name = "service_man_id", nullable = false)
     private Integer serviceManId;
 
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
+    public ProductModel(String productName, String productDescription, Integer productPrice, Integer productWarranty) {
         this.productName = productName;
-    }
-
-    public String getProductDescription() {
-        return productDescription;
-    }
-
-    public void setProductDescription(String productDescription) {
         this.productDescription = productDescription;
-    }
-
-    public Integer getProductPrice() {
-        return productPrice;
-    }
-
-    public void setProductPrice(Integer productPrice) {
         this.productPrice = productPrice;
-    }
-
-    public Integer getProductWarranty() {
-        return productWarranty;
-    }
-
-    public void setProductWarranty(Integer productWarranty) {
         this.productWarranty = productWarranty;
     }
 
-    public String getProductImage() {
-        return productImage;
-    }
-
-    public void setProductImage(String productImage) {
-        this.productImage = productImage;
-    }
-
-    public Integer getManufacturerId() {
-        return manufacturerId;
-    }
-
-    public void setManufacturerId(Integer manufacturerId) {
-        this.manufacturerId = manufacturerId;
-    }
-
-    public Integer getServiceManId() {
-        return serviceManId;
-    }
-
-    public void setServiceManId(Integer serviceManId) {
-        this.serviceManId = serviceManId;
+    public ProductModel() {
     }
 
     @Override

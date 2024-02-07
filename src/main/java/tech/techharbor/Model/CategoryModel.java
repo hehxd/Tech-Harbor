@@ -1,10 +1,12 @@
 package tech.techharbor.Model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Objects;
 
 @Entity
+@Data
 @Table(name = "category", schema = "project", catalog = "db_202324z_va_prj_techharbor")
 public class CategoryModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,20 +17,11 @@ public class CategoryModel {
     @Column(name = "category_name", nullable = false, length = 100)
     private String categoryName;
 
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
+    public CategoryModel(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public CategoryModel() {
     }
 
     @Override

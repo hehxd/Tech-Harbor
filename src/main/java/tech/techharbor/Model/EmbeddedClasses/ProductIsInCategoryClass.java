@@ -1,9 +1,7 @@
 package tech.techharbor.Model.EmbeddedClasses;
 
-import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Id;
 import lombok.Data;
 
 import java.io.Serializable;
