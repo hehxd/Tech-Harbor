@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import tech.techharbor.Model.CategoryModel;
-import tech.techharbor.Model.EmbeddedClasses.ProductIsInCategoryClass;
 import tech.techharbor.Model.ProductIsInCategoryModel;
 import tech.techharbor.Model.ProductModel;
 import tech.techharbor.Repository.ProductIsInCategoryRepository;
@@ -15,7 +14,6 @@ import tech.techharbor.Service.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Controller
@@ -49,7 +47,7 @@ public class CategoryController {
             }
         }
         List<ProductModel> productsInCategory = productService.findAllProductsWithIds(productIds);
-
+        model.addAttribute("selectedCategory", name);
         model.addAttribute("categories", allCategories);
         model.addAttribute("products", productsInCategory);
 

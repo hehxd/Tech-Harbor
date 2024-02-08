@@ -32,7 +32,7 @@
 <div class="container mx-auto mt-8">
     <div class="flex flex-col sm:flex-row"> <!-- Flex direction column for small screens, row for larger screens -->
         <!-- Categories -->
-        <div class="w-full sm:w-1/6 bg-gray-800 shadow-lg rounded-lg p-4 m-2 mr-0 sm:mr-10 text-center text-white text-lg">
+        <div class="inline-block sm:w-1/6 bg-gray-800 shadow-lg rounded-lg p-4 m-2 mr-0 sm:mr-10 text-center text-white text-lg mb-auto">
             <h2 class="text-xl font-semibold mb-4">Categories</h2>
             <hr>
             <ul>
@@ -50,11 +50,13 @@
         <div class="w-full sm:w-3/4"> <!-- Full width for small screens, 3/4 width for larger screens -->
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-semibold">Hot Products</h2>
-                <input type="text" placeholder="Search..." class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                <label>
+                    <input type="text" placeholder="Search..." class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                </label>
             </div>
             <!-- Product Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-8"> <!-- 1 column for small screens, 3 columns for larger screens -->
-                <!-- Sample Product Card (Replace with your actual products) -->
+
                 <div th:each="product : ${products}" class="bg-white shadow-lg rounded-lg p-4">
                     <img src="../static/images/intel_core_i7.jpg" th:src="${product.productImage}" alt="Product Image" class="mb-4 rounded-lg object-scale-down h-48 w-96">
                     <a th:href="@{'/product/{id}' (id=${product.productId})}"><h3 th:text="${product.productName}" class="font-semibold text-lg mb-2">asd</h3></a>
