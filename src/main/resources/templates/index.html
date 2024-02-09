@@ -22,7 +22,7 @@
         </ul>
         <ul class="flex space-x-4">
             <li><a href="#" class="hover:text-emerald-500">Sign In</a></li>
-            <li> / </li>
+            <li> /</li>
             <li><a href="#" class="hover:text-emerald-500">Register</a></li>
         </ul>
     </div>
@@ -51,23 +51,35 @@
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-semibold">Hot Products</h2>
                 <label>
-                    <input type="text" placeholder="Search..." class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                    <input type="text" placeholder="Search..."
+                           class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
                 </label>
             </div>
             <!-- Product Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8"> <!-- 1 column for small screens, 3 columns for larger screens -->
-
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                <!-- 1 column for small screens, 3 columns for larger screens -->
+                <!-- Product Card -->
                 <div th:each="product : ${products}" class="bg-white shadow-lg rounded-lg p-4">
-                    <img src="../static/images/intel_core_i7.jpg" th:src="${product.productImage}" alt="Product Image" class="mb-4 rounded-lg object-scale-down h-48 w-96">
-                    <a th:href="@{'/product/{id}' (id=${product.productId})}"><h3 th:text="${product.productName}" class="font-semibold text-lg mb-2">asd</h3></a>
-                    <p th:text="${product.productDescription}" class="text-gray-600">
+                    <img src="../static/images/intel_core_i7.jpg" th:src="${product.productImage}" alt="Product Image"
+                         class="mb-4 rounded-lg object-scale-down h-48 w-96">
+                    <a th:href="@{'/product/{id}' (id=${product.productId})}">
+                        <h3 th:text="${product.productName}" class="font-semibold text-lg mb-2">asd</h3>
+                    </a>
+                    <p th:attr="title=${product.productDescription}" class="text-gray-600 overflow-hidden"
+                       style="height: 150px;">
+                        <span th:text="${product.productDescription.length() &gt; 142 ? product.productDescription.substring(0, 142) + '...' : product.productDescription}"></span>
+                    </p>
                     <div class="mt-4 flex justify-between items-center">
-                    <span th:text="${product.productPrice + ' ден.'}" class="text-gray-800 font-semibold"></span>
-                        <button class="px-4 py-2 bg-indigo-500 text-white font-bold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Add to Cart</button>
+                        <span th:text="${product.productPrice + ' ден.'}" class="text-gray-800 font-semibold"></span>
+                        <button class="px-4 py-2 bg-indigo-500 text-white font-bold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Add to Cart
+                        </button>
                     </div>
                 </div>
 
+
             </div>
+
         </div>
     </div>
 </div>

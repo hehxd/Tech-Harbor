@@ -56,14 +56,22 @@
             </div>
             <!-- Product Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-8"> <!-- 1 column for small screens, 3 columns for larger screens -->
-                <!-- Sample Product Card (Replace with your actual products) -->
-                <div th:each="product : ${products}" class="bg-white shadow-lg rounded-lg p-4 mb-auto">
-                    <img src="../static/images/intel_core_i7.jpg" th:src="${product.productImage}" alt="Product Image" class="mb-4 rounded-lg object-scale-down h-48 w-96">
-                    <a th:href="@{'/product/{id}' (id=${product.productId})}"><h3 th:text="${product.productName}" class="font-semibold text-lg mb-2">asd</h3></a>
-                    <p th:text="${product.productDescription}" class="text-gray-600">
+                <!--Product Card -->
+                <div th:each="product : ${products}" class="bg-white shadow-lg rounded-lg p-4">
+                    <img src="../static/images/intel_core_i7.jpg" th:src="${product.productImage}" alt="Product Image"
+                         class="mb-4 rounded-lg object-scale-down h-48 w-96">
+                    <a th:href="@{'/product/{id}' (id=${product.productId})}">
+                        <h3 th:text="${product.productName}" class="font-semibold text-lg mb-2">asd</h3>
+                    </a>
+                    <p th:attr="title=${product.productDescription}" class="text-gray-600 overflow-hidden"
+                       style="height: 150px;">
+                        <span th:text="${product.productDescription.length() &gt; 142 ? product.productDescription.substring(0, 142) + '...' : product.productDescription}"></span>
+                    </p>
                     <div class="mt-4 flex justify-between items-center">
                         <span th:text="${product.productPrice + ' ден.'}" class="text-gray-800 font-semibold"></span>
-                        <button class="px-4 py-2 bg-indigo-500 text-white font-bold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Add to Cart</button>
+                        <button class="px-4 py-2 bg-indigo-500 text-white font-bold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Add to Cart
+                        </button>
                     </div>
                 </div>
 
