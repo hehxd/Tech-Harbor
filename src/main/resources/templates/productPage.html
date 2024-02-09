@@ -6,6 +6,7 @@
     <title>Product Page Template</title>
     <!-- Tailwind CSS from CDN for development purposes -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="./output.css" rel="stylesheet">
 </head>
 <body class="font-sans antialiased bg-gray-100">
@@ -48,6 +49,7 @@
                     </div>
                 </div>
             </div>
+            <!-- Review Section -->
             <div class="mt-8">
                 <div class="mt-16 flex items-center justify-between">
                     <h2 class="text-xl font-semibold text-white">Product Reviews</h2>
@@ -55,6 +57,15 @@
                 </div>
 
                 <div class="mt-4">
+                    <ul class="divide-y divide-gray-300">
+                        <li th:each="review : ${reviews}" class="py-4 border-2 rounded-2xl">
+                            <div class="flex items-center">
+                                <i class="fa-regular fa-star ml-2 mr-3" style="color: #ffffff;"></i>
+                                <p class="text-lg font-semibold mr-4 text-white" th:text="${review.reviewRating}"></p>
+                                <p class="text-lg text-white" th:text="${review.reviewDescription}"></p>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -62,4 +73,25 @@
 </div>
 
 </body>
+
+<!-- Footer -->
+<footer class="fixed bottom-0 left-0 w-full bg-gray-800 text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <div>
+            <p class="text-lg">Contact Us:</p>
+            <p class="text-lg">Email: <a href="mailto:contact@techharbor.com" class="hover:text-emerald-500">contact@techharbor.com</a></p>
+            <p class="text-lg">Phone: <span class="inline-block bg-gray-700 text-white px-2 py-1 rounded-lg">123-456-7890</span></p>
+        </div>
+        <p class="text-lg">&copy; 2024 Tech Harbor. All rights reserved.</p>
+        <div>
+            <p class="text-lg">Follow Us:</p>
+            <ul class="flex space-x-4">
+                <li><a href="#" class="hover:text-emerald-500">Facebook</a></li>
+                <li><a href="#" class="hover:text-emerald-500">Instagram</a></li>
+                <li><a href="#" class="hover:text-emerald-500">Twitter</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
 </html>

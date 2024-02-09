@@ -1,10 +1,12 @@
 package tech.techharbor.Model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Objects;
 
 @Entity
+@Data
 @Table(name = "review", schema = "project", catalog = "db_202324z_va_prj_techharbor")
 public class ReviewModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,44 +26,14 @@ public class ReviewModel {
     @Column(name = "product_id", nullable = false)
     private Integer productId;
 
-    public Integer getReviewId() {
-        return reviewId;
-    }
-
-    public void setReviewId(Integer reviewId) {
-        this.reviewId = reviewId;
-    }
-
-    public Integer getReviewRating() {
-        return reviewRating;
-    }
-
-    public void setReviewRating(Integer reviewRating) {
+    public ReviewModel(Integer reviewRating, String reviewDescription, Integer customerId, Integer productId) {
         this.reviewRating = reviewRating;
-    }
-
-    public String getReviewDescription() {
-        return reviewDescription;
-    }
-
-    public void setReviewDescription(String reviewDescription) {
         this.reviewDescription = reviewDescription;
-    }
-
-    public Integer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
-    }
-
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
         this.productId = productId;
+    }
+
+    public ReviewModel() {
     }
 
     @Override
