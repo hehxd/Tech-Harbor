@@ -1,6 +1,7 @@
 package tech.techharbor.Service.Impl;
 
 import org.springframework.stereotype.Service;
+import tech.techharbor.Model.Exceptions.ReviewNotFoundException;
 import tech.techharbor.Model.ReviewModel;
 import tech.techharbor.Repository.ReviewRepository;
 import tech.techharbor.Service.ReviewService;
@@ -35,7 +36,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewModel update(Integer id, Integer rating, String description) {
-        ReviewModel review = this.reviewRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid review ID: " + id));
+        ReviewModel review = this.reviewRepository.findById(id).orElseThrow(() -> new ReviewNotFoundException(id));
         review.setReviewRating(rating);
         review.setReviewDescription(description);
         return this.reviewRepository.save(review);

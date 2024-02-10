@@ -1,5 +1,6 @@
 package tech.techharbor.Web;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import tech.techharbor.Model.CategoryModel;
 import tech.techharbor.Model.ProductIsInCategoryModel;
 import tech.techharbor.Model.ProductModel;
+import tech.techharbor.Model.UserTableModel;
 import tech.techharbor.Repository.ProductIsInCategoryRepository;
 import tech.techharbor.Service.CategoryService;
 import tech.techharbor.Service.ProductService;
@@ -33,7 +35,8 @@ public class CategoryController {
 
     @GetMapping("/category/{name}")
     public String showProduct(@PathVariable String name,
-                              Model model) {
+                              Model model,
+                              HttpSession session) {
 
         List<CategoryModel> allCategories = categoryService.listCategories();
         CategoryModel category = categoryService.categoryByName(name) != null ? categoryService.categoryByName(name) : null;
@@ -50,7 +53,8 @@ public class CategoryController {
         model.addAttribute("selectedCategory", name);
         model.addAttribute("categories", allCategories);
         model.addAttribute("products", productsInCategory);
-
+        UserTableModel user = (UserTableModel) session.getAttribute("user");
+        model.addAttribute("user", user);
         return "categoryPage";
     }
 

@@ -1,11 +1,13 @@
 package tech.techharbor.Model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.sql.Date;
 import java.util.Objects;
 
 @Entity
+@Data
 @Table(name = "order_table", schema = "project", catalog = "db_202324z_va_prj_techharbor")
 public class OrderTableModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,36 +24,13 @@ public class OrderTableModel {
     @Column(name = "customer_id", nullable = false)
     private Integer customerId;
 
-    public Integer getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
-    }
-
-    public String getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(String orderStatus) {
+    public OrderTableModel(String orderStatus, Date orderDate, Integer customerId) {
         this.orderStatus = orderStatus;
-    }
-
-    public Date getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
-    }
-
-    public Integer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
+    }
+
+    public OrderTableModel() {
     }
 
     @Override

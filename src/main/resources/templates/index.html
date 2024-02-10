@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Computer Shop</title>
+    <title>Home Page</title>
     <!-- Tailwind CSS from CDN for development purposes -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -17,9 +17,15 @@
             <img src="/images/logoWhite.png" alt="Logo" width="100" height="100">
             <h1 class="text-2xl font-semibold ml-4 sm:text-3xl">Tech Harbor</h1> <!-- Responsive font size -->
         </div>
-        <ul class="flex space-x-4">
+        <ul class="flex space-x-8">
             <li><a href="/" class="text-emerald-500 hover:text-emerald-500">Home</a></li>
             <li><a href="#" class="hover:text-emerald-500">About Us</a></li>
+            <li class="" th:if="${user != null}">
+                <a th:href="@{'/orders/{id}' (id=${user.userId})}" class="hover:text-emerald-500">My Orders</a>
+            </li>
+            <li th:if="${user != null}">
+                <a href="#" class="hover:text-emerald-500">My Reviews</a>
+            </li>
         </ul>
         <ul class="flex space-x-4">
             <li th:if="${user != null}">

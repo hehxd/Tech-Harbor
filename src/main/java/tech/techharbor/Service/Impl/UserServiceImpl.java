@@ -1,6 +1,7 @@
 package tech.techharbor.Service.Impl;
 
 import org.springframework.stereotype.Service;
+import tech.techharbor.Model.Exceptions.UserNotFoundException;
 import tech.techharbor.Model.UserTableModel;
 import tech.techharbor.Repository.UserTableRepository;
 import tech.techharbor.Service.UserService;
@@ -34,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserTableModel update(Integer id, String name, String username, String email, String password, String phoneNumber) {
-        UserTableModel user = this.userTableRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + id));
+        UserTableModel user = this.userTableRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         user.setNameUser(name);
         user.setUsername(username);
         user.setEmail(email);

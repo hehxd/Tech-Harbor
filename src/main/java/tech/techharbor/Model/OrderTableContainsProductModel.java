@@ -18,7 +18,6 @@ public class OrderTableContainsProductModel {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-
     @Override
     public int hashCode() {
         return Objects.hash(orderTableContainsProductClass, quantity);
