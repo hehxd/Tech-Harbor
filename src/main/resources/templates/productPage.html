@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="./output.css" rel="stylesheet">
 </head>
-<body class="font-sans antialiased bg-gray-100">
+<body class="font-sans antialiased bg-gray-100 flex flex-col min-h-screen">
 
 <nav class="bg-gray-800 text-white p-4 text-lg sm:text-xl"> <!-- Responsive font size -->
     <div class="container mx-auto flex justify-between items-center">
@@ -47,7 +47,7 @@
     </div>
 </nav>
 
-<div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 bg-gray-800 rounded-lg mt-16">
+<div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 bg-gray-800 rounded-lg mt-16 flex-grow">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div class="lg:col-span-1 rounded-lg">
             <img th:src="${product.productImage}" src="../static/images/intel_core_i7.jpg" alt="Image of product" class="object-cover h-96 w-96 rounded-lg">
@@ -71,13 +71,37 @@
             <div class="mt-8">
                 <div class="mt-16 flex items-center justify-between">
                     <h2 class="text-xl font-semibold text-white">Product Reviews</h2>
-                    <button type="button" class="px-4 py-2 bg-indigo-500 text-white font-bold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ml-5">Add a Review</button>
+                    <button type="button" id="addReviewBtn" class="px-4 py-2 bg-indigo-500 text-white font-bold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ml-5">Add a Review</button>
                 </div>
 
+                <!-- Popup for the review form -->
+                <div id="reviewPopup" class="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex justify-center items-center" style="display: none;">
+                    <div class="bg-white rounded-lg p-8 max-w-6xl">
+                        <button class="absolute top-0 right-0 mt-2 mr-2 text-gray-600" onclick="closePopup()">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                        <form id="reviewForm">
+                            <input type="hidden" name="productId" th:value="${product.productId}" />
+                            <div class="mb-4">
+                                <label for="reviewRating" class="block text-gray-700 text-sm font-bold mb-2">Rating:</label>
+                                <input type="number" name="reviewRating" id="reviewRating" min="1" max="5" required class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            </div>
+                            <div class="mb-6">
+                                <label for="reviewDescription" class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
+                                <textarea name="reviewDescription" id="reviewDescription" required class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                            </div>
+                            <div class="flex justify-end">
+                                <button type="submit" class="px-4 py-2 bg-indigo-500 text-white font-bold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Submit Review</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
                 <div class="mt-4">
-                    <ul class="divide-y divide-gray-300">
-                        <li th:each="review : ${reviews}" class="py-4 border-2 rounded-2xl">
-                            <div class="flex items-center">
+                    <ul>
+                        <li th:each="review : ${reviews}" class="border-2 rounded-2xl m-5 box-border">
+                            <div class="flex items-center m-5">
                                 <i class="fa-regular fa-star ml-2 mr-3" style="color: #ffffff;"></i>
                                 <p class="text-lg font-semibold mr-4 text-white" th:text="${review.reviewRating}"></p>
                                 <p class="text-lg text-white" th:text="${review.reviewDescription}"></p>
@@ -93,15 +117,17 @@
 </body>
 
 <!-- Footer -->
-<footer class="fixed bottom-0 left-0 w-full bg-gray-800 text-white p-4">
-    <div class="container mx-auto flex justify-between items-center">
-        <div>
+<footer class="my-12 mb-0 bg-gray-800 text-white p-4">
+    <div class="container mx-auto flex flex-wrap items-center justify-between">
+        <div class="w-full md:w-auto mb-4 md:mb-0">
             <p class="text-lg">Contact Us:</p>
             <p class="text-lg">Email: <a href="mailto:contact@techharbor.com" class="hover:text-emerald-500">contact@techharbor.com</a></p>
             <p class="text-lg">Phone: <span class="inline-block bg-gray-700 text-white px-2 py-1 rounded-lg">123-456-7890</span></p>
         </div>
-        <p class="text-lg">&copy; 2024 Tech Harbor. All rights reserved.</p>
-        <div>
+        <div class="w-full md:w-auto mb-4 md:mb-0">
+            <p class="text-lg">&copy; 2024 Tech Harbor. All rights reserved.</p>
+        </div>
+        <div class="w-full md:w-auto">
             <p class="text-lg">Follow Us:</p>
             <ul class="flex space-x-4">
                 <li><a href="#" class="hover:text-emerald-500">Facebook</a></li>
@@ -112,4 +138,45 @@
     </div>
 </footer>
 
+
+
 </html>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    document.getElementById('addReviewBtn').addEventListener('click', function() {
+        document.getElementById('reviewPopup').style.display = 'flex';
+    });
+
+    function closePopup() {
+        document.getElementById('reviewPopup').style.display = 'none';
+    }
+
+    document.getElementById('reviewForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Get form data
+        var formData = new FormData(document.getElementById('reviewForm'));
+
+        // Make AJAX request to submit the review
+        fetch('/add-review', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error submitting review');
+                }
+                closePopup();
+                console.log('Redirecting...')
+                window.location.href = '/product/' + formData.get('productId'); // Redirect to product page
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+    /*]]>*/
+</script>
+
+
+

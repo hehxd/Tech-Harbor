@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import tech.techharbor.Model.ProductModel;
 import tech.techharbor.Model.ReviewModel;
 import tech.techharbor.Model.UserTableModel;
@@ -35,6 +37,21 @@ public class ProductController {
         UserTableModel user = (UserTableModel) session.getAttribute("user");
         model.addAttribute("user", user);
         return "productPage";
+    }
+
+    @PostMapping("/add-review")
+    public String addReview(@RequestParam Integer productId,
+                            @RequestParam int reviewRating,
+                            @RequestParam String reviewDescription,
+                            HttpSession session) {
+
+        UserTableModel user = (UserTableModel) session.getAttribute("user");
+
+        reviewService.create(reviewRating, reviewDescription,user.getUserId(),productId);
+        System.out.println("add-review called");
+        System.out.println(user);
+
+        return "redirect:/product/" + productId;
     }
 
 

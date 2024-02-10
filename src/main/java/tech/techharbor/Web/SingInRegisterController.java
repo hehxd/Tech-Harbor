@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import tech.techharbor.Model.CustomerModel;
 import tech.techharbor.Model.UserTableModel;
+import tech.techharbor.Repository.CustomerRepository;
 import tech.techharbor.Service.UserService;
 
 
@@ -18,9 +20,12 @@ public class SingInRegisterController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-    public SingInRegisterController(UserService userService, PasswordEncoder passwordEncoder) {
+    private final CustomerRepository customerRepository;
+
+    public SingInRegisterController(UserService userService, PasswordEncoder passwordEncoder, CustomerRepository customerRepository) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.customerRepository = customerRepository;
     }
 
     @GetMapping("/register")
@@ -44,9 +49,17 @@ public class SingInRegisterController {
             throw new IllegalArgumentException("Invalid email address");
 
 
-        if(password.equals(confirmPassword))
-            this.userService.create(name,username,email,passwordEncoder.encode(password),phoneNumber);
+        if(password.equals(confirmPassword)) {
+            UserTableModel user = userService.create(name, username, email, passwordEncoder.encode(password), phoneNumber);
 
+            CustomerModel customer = new CustomerModel();
+            System.out.println(user);
+            System.out.println("USER ID " + user.getUserId());
+            customer.setUserId(user.getUserId());
+
+            customerRepository.save(customer);
+            System.out.println();
+        }
         return "redirect:/login";
     }
 
