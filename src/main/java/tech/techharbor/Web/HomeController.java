@@ -29,4 +29,11 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/aboutUs")
+    public String getAboutUsPage(Model model, HttpSession session) {
+        UserTableModel user = (UserTableModel) session.getAttribute("user");
+        model.addAttribute("user", user);
+        return "aboutUs";
+    }
+
 }

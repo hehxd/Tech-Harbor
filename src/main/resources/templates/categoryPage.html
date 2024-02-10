@@ -19,7 +19,7 @@
         </div>
         <ul class="flex space-x-8">
             <li><a href="/" class="hover:text-emerald-500">Home</a></li>
-            <li><a href="#" class="hover:text-emerald-500">About Us</a></li>
+            <li><a th:href="@{'/aboutUs'}" class="hover:text-emerald-500">About Us</a></li>
             <li class="" th:if="${user != null}">
                 <a th:href="@{'/orders/{id}' (id=${user.userId})}" class="hover:text-emerald-500">My Orders</a>
             </li>
@@ -71,11 +71,13 @@
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-semibold">Hot Products</h2>
                 <label>
-                    <input type="text" placeholder="Search..." class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                    <input type="text" placeholder="Search..."
+                           class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
                 </label>
             </div>
             <!-- Product Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8"> <!-- 1 column for small screens, 3 columns for larger screens -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                <!-- 1 column for small screens, 3 columns for larger screens -->
                 <!--Product Card -->
                 <div th:each="product : ${products}" class="bg-white shadow-lg rounded-lg p-4">
                     <img src="../static/images/intel_core_i7.jpg" th:src="${product.productImage}" alt="Product Image"
@@ -101,15 +103,19 @@
 </div>
 </body>
 <!-- Footer -->
-<footer class="bg-gray-800 text-white p-4 mt-8">
-    <div class="container mx-auto flex justify-between items-center">
-        <div>
+<footer class="my-12 mb-0 bg-gray-800 text-white p-4">
+    <div class="container mx-auto flex flex-wrap items-center justify-between">
+        <div class="w-full md:w-auto mb-4 md:mb-0">
             <p class="text-lg">Contact Us:</p>
-            <p class="text-lg">Email: <a href="mailto:contact@techharbor.com" class="hover:text-emerald-500">contact@techharbor.com</a></p>
-            <p class="text-lg">Phone: <span class="inline-block bg-gray-700 text-white px-2 py-1 rounded-lg">123-456-7890</span></p>
+            <p class="text-lg">Email: <a href="mailto:contact@techharbor.com" class="hover:text-emerald-500">contact@techharbor.com</a>
+            </p>
+            <p class="text-lg">Phone: <span class="inline-block bg-gray-700 text-white px-2 py-1 rounded-lg">123-456-7890</span>
+            </p>
         </div>
-        <p class="text-lg">&copy; 2024 Tech Harbor. All rights reserved.</p>
-        <div>
+        <div class="w-full md:w-auto mb-4 md:mb-0">
+            <p class="text-lg">&copy; 2024 Tech Harbor. All rights reserved.</p>
+        </div>
+        <div class="w-full md:w-auto">
             <p class="text-lg">Follow Us:</p>
             <ul class="flex space-x-4">
                 <li><a href="#" class="hover:text-emerald-500">Facebook</a></li>

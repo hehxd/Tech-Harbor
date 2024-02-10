@@ -19,7 +19,7 @@
         </div>
         <ul class="flex space-x-8">
             <li><a href="/" class="hover:text-emerald-500">Home</a></li>
-            <li><a href="#" class="hover:text-emerald-500">About Us</a></li>
+            <li><a th:href="@{'/aboutUs'}" class="hover:text-emerald-500">About Us</a></li>
             <li class="" th:if="${user != null}">
                 <a th:href="@{'/orders/{id}' (id=${user.userId})}" class="hover:text-emerald-500">My Orders</a>
             </li>
@@ -121,8 +121,10 @@
     <div class="container mx-auto flex flex-wrap items-center justify-between">
         <div class="w-full md:w-auto mb-4 md:mb-0">
             <p class="text-lg">Contact Us:</p>
-            <p class="text-lg">Email: <a href="mailto:contact@techharbor.com" class="hover:text-emerald-500">contact@techharbor.com</a></p>
-            <p class="text-lg">Phone: <span class="inline-block bg-gray-700 text-white px-2 py-1 rounded-lg">123-456-7890</span></p>
+            <p class="text-lg">Email: <a href="mailto:contact@techharbor.com" class="hover:text-emerald-500">contact@techharbor.com</a>
+            </p>
+            <p class="text-lg">Phone: <span class="inline-block bg-gray-700 text-white px-2 py-1 rounded-lg">123-456-7890</span>
+            </p>
         </div>
         <div class="w-full md:w-auto mb-4 md:mb-0">
             <p class="text-lg">&copy; 2024 Tech Harbor. All rights reserved.</p>
