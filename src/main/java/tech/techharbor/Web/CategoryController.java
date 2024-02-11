@@ -6,16 +6,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import tech.techharbor.Model.CategoryModel;
-import tech.techharbor.Model.ProductIsInCategoryModel;
-import tech.techharbor.Model.ProductModel;
-import tech.techharbor.Model.UserTableModel;
+import tech.techharbor.Model.*;
 import tech.techharbor.Repository.ProductIsInCategoryRepository;
 import tech.techharbor.Service.CategoryService;
 import tech.techharbor.Service.ProductService;
+import tech.techharbor.Service.SubcategoryService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @Controller
@@ -24,12 +23,14 @@ public class CategoryController {
     private final CategoryService categoryService;
     private final ProductService productService;
 
+    private final SubcategoryService subcategoryService;
     private final ProductIsInCategoryRepository productIsInCategoryRepository;
 
 
-    public CategoryController(CategoryService categoryService, ProductService productService, ProductIsInCategoryRepository productIsInCategoryRepository) {
+    public CategoryController(CategoryService categoryService, ProductService productService, SubcategoryService subcategoryService, ProductIsInCategoryRepository productIsInCategoryRepository) {
         this.categoryService = categoryService;
         this.productService = productService;
+        this.subcategoryService = subcategoryService;
         this.productIsInCategoryRepository = productIsInCategoryRepository;
     }
 
@@ -50,6 +51,38 @@ public class CategoryController {
             }
         }
         List<ProductModel> productsInCategory = productService.findAllProductsWithIds(productIds);
+        model.addAttribute("selectedCategory", name);
+        model.addAttribute("categories", allCategories);
+        model.addAttribute("products", productsInCategory);
+        UserTableModel user = (UserTableModel) session.getAttribute("user");
+        model.addAttribute("user", user);
+        return "categoryPage";
+    }
+
+    @GetMapping("/category/subcategory/{name}")
+    public String showSubcategoryProducts(@PathVariable String name,
+                              Model model,
+                              HttpSession session) {
+        System.out.println(name);
+        List<CategoryModel> allCategories = categoryService.listCategories();
+        SubcategoryModel subCategory = subcategoryService.findBySubcategoryNameLike(name);
+        CategoryModel category = categoryService.findById(subCategory.getCategoryId());
+
+        List<ProductIsInCategoryModel> productIsInCategories = productIsInCategoryRepository.findAll();
+        List<Integer> productIds = new ArrayList<>();
+
+        System.out.println(subCategory);
+        List<ProductModel> productsInCategory = new ArrayList<>();
+        for (ProductIsInCategoryModel productIsInCategory : productIsInCategories) {
+            ProductModel product = productService.findById(productIsInCategory.getProductIsInCategoryClass().getProductId());
+                if(product.getProductName().contains(name)) {
+                    productsInCategory.add(product);
+                }
+        }
+
+
+        System.out.println("Subcategory controler");
+
         model.addAttribute("selectedCategory", name);
         model.addAttribute("categories", allCategories);
         model.addAttribute("products", productsInCategory);

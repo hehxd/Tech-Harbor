@@ -8,6 +8,22 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="./output.css" rel="stylesheet">
+    <style>
+        .subcategory {
+            display: none;
+        }
+        .category-item:hover .subcategory {
+            display: block;
+            right: 0; /* Adjust the position to the right */
+            top: 0;
+            background-color: #4a5568; /* Change the background color */
+            padding: 1rem;
+            z-index: 10;
+            width: 240px; /* Increase the width */
+            border: 2px solid;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 font-sans">
 <!-- Navbar -->
@@ -20,7 +36,7 @@
         <ul class="flex space-x-8">
             <li><a href="/" class="text-emerald-500 hover:text-emerald-500">Home</a></li>
             <li><a th:href="@{'/aboutUs'}" class="hover:text-emerald-500">About Us</a></li>
-            <li class="" th:if="${user != null}">
+            <li th:if="${user != null}">
                 <a th:href="@{'/orders/{id}' (id=${user.userId})}" class="hover:text-emerald-500">My Orders</a>
             </li>
             <li th:if="${user != null}">
@@ -55,13 +71,26 @@
         <div class="inline-block sm:w-1/6 bg-gray-800 shadow-lg rounded-lg p-4 m-2 mr-0 sm:mr-10 text-center text-white text-lg mb-auto">
             <h2 class="text-xl font-semibold mb-4">Categories</h2>
             <hr>
-            <ul>
-                <li th:each="cat : ${categories}" class="m-5 hover:text-emerald-500">
+            <ul class="relative">
+                <li th:each="cat : ${categories}" class="m-5 hover:text-emerald-500 category-item relative">
                     <a th:text="${cat.categoryName}"
                        th:value="${cat.categoryId}"
                        th:href="@{'/category/' + ${cat.categoryName}}"
+                       th:id="${cat.categoryId}"
                        class="text-white-500 hover:text-emerald-500">
                     </a>
+                    <div class="subcategory ml-8"> <!-- Separate div for subcategories -->
+                        <ul>
+                            <li th:each="subcat : ${subcategories}" th:if="${subcat.categoryId} == ${cat.categoryId}">
+                                <a th:text="${subcat.subcategoryName}"
+                                   th:value="${subcat.subcategoryId}"
+                                   th:href="@{'/category/subcategory/' + ${subcat.subcategoryName}}"
+                                   th:id="${subcat.subcategoryId}"
+                                   class="text-white-500 hover:text-emerald-500">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -130,8 +159,8 @@
 
 
 
-
-
-
-
 </html>
+
+
+
+

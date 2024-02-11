@@ -1,10 +1,12 @@
 package tech.techharbor.Model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Objects;
 
 @Entity
+@Data
 @Table(name = "subcategory", schema = "project", catalog = "db_202324z_va_prj_techharbor")
 public class SubcategoryModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,28 +20,12 @@ public class SubcategoryModel {
     @Column(name = "category_id", nullable = false)
     private Integer categoryId;
 
-    public Integer getSubcategoryId() {
-        return subcategoryId;
-    }
-
-    public void setSubcategoryId(Integer subcategoryId) {
-        this.subcategoryId = subcategoryId;
-    }
-
-    public String getSubcategoryName() {
-        return subcategoryName;
-    }
-
-    public void setSubcategoryName(String subcategoryName) {
+    public SubcategoryModel(String subcategoryName, Integer categoryId) {
         this.subcategoryName = subcategoryName;
-    }
-
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public SubcategoryModel() {
     }
 
     @Override

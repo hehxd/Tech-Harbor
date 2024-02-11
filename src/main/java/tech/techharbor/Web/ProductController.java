@@ -13,6 +13,7 @@ import tech.techharbor.Model.UserTableModel;
 import tech.techharbor.Service.ProductService;
 import tech.techharbor.Service.ReviewService;
 
+
 import java.util.List;
 
 @Controller
@@ -41,7 +42,7 @@ public class ProductController {
 
     @PostMapping("/add-review")
     public String addReview(@RequestParam Integer productId,
-                            @RequestParam int reviewRating,
+                            @RequestParam Integer reviewRating,
                             @RequestParam String reviewDescription,
                             HttpSession session) {
 
@@ -53,6 +54,5 @@ public class ProductController {
 
         return "redirect:/product/" + productId;
     }
-
 
 }

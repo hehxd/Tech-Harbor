@@ -7,7 +7,6 @@ import tech.techharbor.Repository.CategoryRepository;
 import tech.techharbor.Service.CategoryService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -23,8 +22,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Optional<CategoryModel> findById(Integer id) {
-        return this.categoryRepository.findById(id);
+    public CategoryModel findById(Integer id) {
+        return this.categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
     }
 
     @Override

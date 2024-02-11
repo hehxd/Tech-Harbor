@@ -20,12 +20,12 @@
         </div>
         <ul class="flex space-x-8">
             <li><a href="/" class="hover:text-emerald-500">Home</a></li>
-            <li><a href="#" class="text-emerald-500 hover:text-emerald-500">About Us</a></li>
-            <li class="" th:if="${user != null}">
+            <li><a th:href="@{'/aboutUs'}" class="text-emerald-500 hover:text-emerald-500">About Us</a></li>
+            <li th:if="${user != null}">
                 <a th:href="@{'/orders/{id}' (id=${user.userId})}" class="hover:text-emerald-500">My Orders</a>
             </li>
             <li th:if="${user != null}">
-                <a href="#" class="hover:text-emerald-500">My Reviews</a>
+                <a th:href="@{'/reviews/{id}' (id=${user.userId})}" class="hover:text-emerald-500">My Reviews</a>
             </li>
         </ul>
         <ul class="flex space-x-4">
