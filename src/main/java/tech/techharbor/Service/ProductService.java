@@ -17,4 +17,8 @@ public interface ProductService {
     void delete(Integer id);
 
     List<ProductModel> findAllProductsWithIds (List<Integer> productIds);
+
+    List<ProductModel> findAllByNameLike(String name);
+
+    List<ProductModel> findAll();
 }

@@ -61,27 +61,22 @@ public class CategoryController {
 
     @GetMapping("/category/subcategory/{name}")
     public String showSubcategoryProducts(@PathVariable String name,
-                              Model model,
-                              HttpSession session) {
-        System.out.println(name);
+                                          Model model,
+                                          HttpSession session) {
         List<CategoryModel> allCategories = categoryService.listCategories();
         SubcategoryModel subCategory = subcategoryService.findBySubcategoryNameLike(name);
-        CategoryModel category = categoryService.findById(subCategory.getCategoryId());
 
         List<ProductIsInCategoryModel> productIsInCategories = productIsInCategoryRepository.findAll();
-        List<Integer> productIds = new ArrayList<>();
 
         System.out.println(subCategory);
         List<ProductModel> productsInCategory = new ArrayList<>();
         for (ProductIsInCategoryModel productIsInCategory : productIsInCategories) {
             ProductModel product = productService.findById(productIsInCategory.getProductIsInCategoryClass().getProductId());
-                if(product.getProductName().contains(name)) {
-                    productsInCategory.add(product);
-                }
+            if (product.getProductName().contains(name)) {
+                productsInCategory.add(product);
+            }
         }
 
-
-        System.out.println("Subcategory controler");
 
         model.addAttribute("selectedCategory", name);
         model.addAttribute("categories", allCategories);

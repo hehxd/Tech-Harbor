@@ -54,4 +54,14 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductModel> findAllProductsWithIds (List<Integer> productIds) {
         return this.productRepository.findAllByProductIdIn(productIds);
     }
+
+    @Override
+    public List<ProductModel> findAllByNameLike(String name) {
+        return this.productRepository.findAllByProductNameLike(name);
+    }
+
+    @Override
+    public List<ProductModel> findAll() {
+        return this.productRepository.findAll();
+    }
 }
