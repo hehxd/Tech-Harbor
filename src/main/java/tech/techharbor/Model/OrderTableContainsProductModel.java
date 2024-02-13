@@ -18,6 +18,14 @@ public class OrderTableContainsProductModel {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
+    public OrderTableContainsProductModel(OrderTableContainsProductClass orderTableContainsProductClass, Integer quantity) {
+        this.orderTableContainsProductClass = orderTableContainsProductClass;
+        this.quantity = quantity;
+    }
+
+    public OrderTableContainsProductModel() {
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(orderTableContainsProductClass, quantity);

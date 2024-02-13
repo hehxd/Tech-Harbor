@@ -32,7 +32,7 @@
         <span>Welcome <span th:text="${user.nameUser}"></span></span>
       </li>
       <li th:if="${user != null}">
-        <a><i class="fa-solid fa-cart-shopping"></i></a>
+        <a th:href="@{'/shoppingCart'}"><i class="fa-solid fa-cart-shopping"></i></a>
       </li>
       <li th:if="${user != null}">
         <a class="hover:text-emerald-500" th:href="@{/logout}">Log out</a>

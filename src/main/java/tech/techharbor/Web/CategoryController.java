@@ -14,7 +14,6 @@ import tech.techharbor.Service.SubcategoryService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 @Controller
@@ -80,6 +79,7 @@ public class CategoryController {
 
         model.addAttribute("selectedCategory", name);
         model.addAttribute("categories", allCategories);
+        model.addAttribute("subcategories", subcategoryService.listSubcategories());
         model.addAttribute("products", productsInCategory);
         UserTableModel user = (UserTableModel) session.getAttribute("user");
         model.addAttribute("user", user);

@@ -2,15 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orders</title>
-    <!-- Tailwind CSS from CDN for development purposes -->
+    <title>Shopping Cart</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="./output.css" rel="stylesheet">
 </head>
-<body class="font-sans antialiased bg-gray-100">
-
+<!-- Navbar -->
 <nav class="bg-gray-800 text-white p-4 text-lg sm:text-xl"> <!-- Responsive font size -->
     <div class="container mx-auto flex justify-between items-center">
         <div class="flex items-center">
@@ -21,7 +18,7 @@
             <li><a href="/" class="hover:text-emerald-500">Home</a></li>
             <li><a th:href="@{'/aboutUs'}" class="hover:text-emerald-500">About Us</a></li>
             <li th:if="${user != null}">
-                <a th:href="@{'/orders/{id}' (id=${user.userId})}" class="text-emerald-500 hover:text-emerald-500">My Orders</a>
+                <a th:href="@{'/orders/{id}' (id=${user.userId})}" class="hover:text-emerald-500">My Orders</a>
             </li>
             <li th:if="${user != null}">
                 <a th:href="@{'/reviews/{id}' (id=${user.userId})}" class="hover:text-emerald-500">My Reviews</a>
@@ -47,37 +44,52 @@
 
     </div>
 </nav>
+<body>
+<main class="container mx-auto mt-8">
+    <h2 class="text-2xl font-bold mb-4">Shopping Cart</h2>
 
-<div class="max-w-5xl mx-auto py-8 grid grid-cols-1 md:grid-cols-2 gap-4 font-sans mb-auto">
-    <div class="card bg-gray-700 p-4 rounded-md shadow-md text-white col-span-1 md:col-span-full">
-        <table class="w-full text-left border-collapse border border-gray-800">
+    <div th:if="${cartItems.isEmpty()}" class="text-center p-4">
+        <p>Your cart is empty.</p>
+        <a href="/" class="underline hover:text-emerald-500">Continue Shopping</a>
+    </div>
+
+    <div th:unless="${cartItems.isEmpty()}" class="my-8">
+        <table class="w-full rounded-md border shadow">
             <thead>
-            <tr class="bg-gray-800 text-white text-center">
-                <th class="px-4 py-2">Order ID</th>
-                <th class="px-4 py-2">Product Picture</th>
-                <th class="px-4 py-2">Product Name</th>
-                <th class="px-4 py-2">Product Quantity</th>
-                <th class="px-4 py-2">Order Date</th>
-                <th class="px-4 py-2">Order Status</th>
+            <tr class="text-center">
+                <th class="px-4 py-2">Image</th>
+                <th class="px-4 py-2">Product</th>
+                <th class="px-4 py-2">Warranty</th>
+                <th class="px-4 py-2">Price</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="order,iterator : ${orders}" class="hover:bg-gray-600 text-center">
-                <td class="px-4 py-2 border border-gray-800">[[${order.orderId}]]</td>
-                <td class="px-4 py-2 border border-gray-800"><img alt="Product Picture" class="object-cover h-32 w-32 rounded-lg" th:src="${products.get(iterator.index).getProductImage()}" ></td>
-                <td class="px-4 py-2 border border-gray-800">[[${products.get(iterator.index).getProductName()}]]</td>
-                <td class="px-4 py-2 border border-gray-800">[[${orderList.get(iterator.index).getQuantity()}]]</td>
-                <td class="px-4 py-2 border border-gray-800">[[${order.orderDate}]]</td>
-                <td class="px-4 py-2 border border-gray-800">[[${order.orderStatus}]]</td>
+            <tr th:each="cartItem : ${cartItems}" class="text-center bg-white hover:bg-gray-100">
+                <td class="px-4 py-2">
+                    <img th:src="${cartItem.productImage}" alt="Product Image" class="m-auto w-32 h-32 rounded-lg object-cover">
+                </td>
+                <td class="px-4 py-2">
+                    <a th:href="@{'/product/{id}' (id=${cartItem.productId})}" class="font-bold hover:text-emerald-500">
+                        <span th:text="${cartItem.productName}"></span>
+                    </a>
+                </td>
+                <td class="px-4 py-2">
+                    <span th:text="${cartItem.productWarranty} + ' years'"></span>
+                </td>
+                <td class="px-4 py-2">
+                    <span th:text="${cartItem.productPrice} + ' ден.'"></span>
+                </td>
             </tr>
             </tbody>
+
         </table>
+        <div class="flex items-center justify-end mt-4">
+        <span class="font-bold text-lg mr-8" th:text="'Total: ' + ${grandTotal} + ' ден.'"></span>
+            <a href="#" class="px-4 py-2 bg-emerald-500 text-white rounded-md hover:bg-emerald-600">Checkout</a>
+        </div>
     </div>
-</div>
-
-
+</main>
 </body>
-
 <!-- Footer -->
 <footer class="bg-white rounded-lg shadow m-4 dark:bg-gray-800">
     <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
@@ -96,5 +108,4 @@
         </ul>
     </div>
 </footer>
-
 </html>
