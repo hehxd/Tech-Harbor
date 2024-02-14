@@ -41,22 +41,26 @@ public class UserOrdersController {
         List<OrderTableContainsProductModel> ordersWithProducts = orderTableContainsProductService.listAll();
 
         List<OrderTableContainsProductModel> finalOrderList = new ArrayList<>();
+        List<OrderTableModel> allOrders = new ArrayList<>();
         List<ProductModel> products = new ArrayList<>();
 
-        for (OrderTableContainsProductModel orderProducts : ordersWithProducts) {
-            for(OrderTableModel order :orders){
+        for (OrderTableModel order :orders) {
+            for(OrderTableContainsProductModel orderProducts : ordersWithProducts){
                 if(Objects.equals(order.getOrderId(), orderProducts.getOrderTableContainsProductClass().getOrderId())){
+                    allOrders.add(order);
                     finalOrderList.add(orderProducts);
                     products.add(productService.findById(orderProducts.getOrderTableContainsProductClass().getProductId()));
                 }
             }
         }
 
+
         if(!finalOrderList.isEmpty() || !products.isEmpty()) {
             model.addAttribute("orderList", finalOrderList);
             model.addAttribute("products", products);
+            model.addAttribute("orders",allOrders);
         }
-        model.addAttribute("orders",orders);
+
 
         return "myOrders";
     }

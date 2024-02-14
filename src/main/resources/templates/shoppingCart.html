@@ -79,13 +79,16 @@
                 <td class="px-4 py-2">
                     <span th:text="${cartItem.productPrice} + ' ден.'"></span>
                 </td>
+                <td class="px-4 py-2">
+                    <a th:with="orderId=${cartItem.getProductId()}" th:href="@{'/removeFromShoppingCart/' + ${orderId}}" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Remove</a>
+                </td>
             </tr>
             </tbody>
 
         </table>
         <div class="flex items-center justify-end mt-4">
         <span class="font-bold text-lg mr-8" th:text="'Total: ' + ${grandTotal} + ' ден.'"></span>
-            <a href="#" class="px-4 py-2 bg-emerald-500 text-white rounded-md hover:bg-emerald-600">Checkout</a>
+            <a th:href="@{'/checkout'}" class="px-4 py-2 bg-emerald-500 text-white rounded-md hover:bg-emerald-600">Checkout</a>
         </div>
     </div>
 </main>
