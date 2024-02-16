@@ -89,6 +89,7 @@
                 <td class="px-4 py-2">
                     <form id="deliveryForm" action="/update-delivery-status" method="post">
                         <input type="hidden" name="deliveryId" th:value="${delivery.deliveryId}" />
+                        <input type="hidden" name="orderId" th:value="${delivery.orderId}" />
                         <label>
                             <select id="deliveryStatusSelect" name="newStatus" class="w-full border p-2"
                                     th:classappend="${delivery.deliveryStatus == 'Delivered'} ? 'bg-green-200' : 'bg-orange-200'"

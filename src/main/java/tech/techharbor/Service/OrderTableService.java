@@ -16,4 +16,7 @@ public interface OrderTableService {
 
     List<OrderTableModel> findByCustomerId(Integer customerId);
     void delete(Integer id);
+
+    void updateOrderStatus(Integer orderId, String newStatus);
+
 }

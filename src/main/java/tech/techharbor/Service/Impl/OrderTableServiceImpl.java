@@ -51,4 +51,13 @@ public class OrderTableServiceImpl implements OrderTableService {
     public void delete(Integer id) {
         this.orderTableRepository.deleteById(id);
     }
+
+    @Override
+    public void updateOrderStatus(Integer orderId, String newStatus) {
+        OrderTableModel order = orderTableRepository.findById(orderId).orElse(null);
+        if (order != null) {
+            order.setOrderStatus(newStatus);
+            orderTableRepository.save(order);
+        }
+    }
 }
