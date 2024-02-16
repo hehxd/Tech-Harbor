@@ -36,8 +36,9 @@ public class ShoppingCartController {
     }
 
     List<ProductModel> shoppingCartList = new ArrayList<>();
+
     @GetMapping("/shoppingCart")
-    public String getShoppingCart(HttpSession session, Model model){
+    public String getShoppingCart(HttpSession session, Model model) {
         UserTableModel user = (UserTableModel) session.getAttribute("user");
         Integer totalPrice = 0;
 
@@ -47,8 +48,8 @@ public class ShoppingCartController {
 
 
         model.addAttribute("user", user);
-        model.addAttribute("grandTotal",totalPrice);
-        model.addAttribute("cartItems",shoppingCartList);
+        model.addAttribute("grandTotal", totalPrice);
+        model.addAttribute("cartItems", shoppingCartList);
 
         return "shoppingCart";
     }
@@ -56,8 +57,7 @@ public class ShoppingCartController {
     @GetMapping("/removeFromShoppingCart/{id}")
     public String removeFromShoppingCart(@PathVariable Integer id,
                                          HttpSession session,
-                                         Model model)
-    {
+                                         Model model) {
         ProductModel productModel = shoppingCartList.stream().filter(product -> product.getProductId().equals(id)).findFirst().orElse(null);
         shoppingCartList.remove(productModel);
 
@@ -70,25 +70,22 @@ public class ShoppingCartController {
 
 
         model.addAttribute("user", user);
-        model.addAttribute("grandTotal",totalPrice);
-        model.addAttribute("cartItems",shoppingCartList);
+        model.addAttribute("grandTotal", totalPrice);
+        model.addAttribute("cartItems", shoppingCartList);
 
         return "shoppingCart";
     }
 
     @GetMapping("/shoppingCart/{id}")
-    public String getProduct(@PathVariable Integer id, HttpSession session){
-
-        UserTableModel user = (UserTableModel) session.getAttribute("user");
+    public String getProduct(@PathVariable Integer id) {
         ProductModel product = productService.findById(id);
         shoppingCartList.add(product);
 
         return "redirect:/";
-
     }
 
     @GetMapping("/checkout")
-    public String checkoutPage(Model model,HttpSession session){
+    public String checkoutPage(Model model, HttpSession session) {
 
         UserTableModel user = (UserTableModel) session.getAttribute("user");
 
@@ -99,21 +96,21 @@ public class ShoppingCartController {
         }
 
         model.addAttribute("user", user);
-        model.addAttribute("grandTotal",grandTotal);
-        model.addAttribute("cartItems",shoppingCartList);
-        return"Checkout";
+        model.addAttribute("grandTotal", grandTotal);
+        model.addAttribute("cartItems", shoppingCartList);
+        return "Checkout";
     }
 
     @GetMapping("/finalizeOrder")
     public String getOrders(HttpSession session,
-                            @RequestParam String address){
+                            @RequestParam String address) {
 
         UserTableModel user = (UserTableModel) session.getAttribute("user");
 
         java.util.Date utilDate = new Date();
-        OrderTableModel order = orderTableService.create("Created",new java.sql.Date(utilDate.getTime()),user.getUserId());
-        shoppingCartList.forEach(product ->orderTableContainsProductService.create(order.getOrderId(),product.getProductId(),1));
-        deliveryService.create("Pending",address,37,order.getOrderId());
+        OrderTableModel order = orderTableService.create("Created", new java.sql.Date(utilDate.getTime()), user.getUserId());
+        shoppingCartList.forEach(product -> orderTableContainsProductService.create(order.getOrderId(), product.getProductId(), 1));
+        deliveryService.create("Pending", address, 37, order.getOrderId());
         shoppingCartList = new ArrayList<>();
         return "redirect:/orders/" + user.getUserId();
 

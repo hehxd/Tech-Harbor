@@ -66,11 +66,8 @@ public class CategoryController {
                                           Model model,
                                           HttpSession session) {
         List<CategoryModel> allCategories = categoryService.listCategories();
-        SubcategoryModel subCategory = subcategoryService.findBySubcategoryNameLike(name);
-
         List<ProductIsInCategoryModel> productIsInCategories = productIsInCategoryRepository.findAll();
 
-        System.out.println(subCategory);
         List<ProductModel> productsInCategory = new ArrayList<>();
         for (ProductIsInCategoryModel productIsInCategory : productIsInCategories) {
             ProductModel product = productService.findById(productIsInCategory.getProductIsInCategoryClass().getProductId());

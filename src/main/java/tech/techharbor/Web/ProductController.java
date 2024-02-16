@@ -1,20 +1,19 @@
 package tech.techharbor.Web;
 
 import jakarta.servlet.http.HttpSession;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import tech.techharbor.Model.*;
-import tech.techharbor.Repository.ProductIsInCategoryRepository;
+import tech.techharbor.Model.ProductModel;
+import tech.techharbor.Model.ReviewModel;
+import tech.techharbor.Model.UserTableModel;
 import tech.techharbor.Service.CategoryService;
 import tech.techharbor.Service.ProductService;
 import tech.techharbor.Service.ReviewService;
 import tech.techharbor.Service.SubcategoryService;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,14 +28,12 @@ public class ProductController {
 
     private final SubcategoryService subcategoryService;
 
-    private final ProductIsInCategoryRepository productIsInCategoryRepository;
 
-    public ProductController(ProductService productService, ReviewService reviewService, CategoryService categoryService, SubcategoryService subcategoryService, ProductIsInCategoryRepository productIsInCategoryRepository) {
+    public ProductController(ProductService productService, ReviewService reviewService, CategoryService categoryService, SubcategoryService subcategoryService) {
         this.productService = productService;
         this.reviewService = reviewService;
         this.categoryService = categoryService;
         this.subcategoryService = subcategoryService;
-        this.productIsInCategoryRepository = productIsInCategoryRepository;
     }
 
     @GetMapping("/product/{id}")
@@ -63,8 +60,6 @@ public class ProductController {
         UserTableModel user = (UserTableModel) session.getAttribute("user");
 
         reviewService.create(reviewRating, reviewDescription, user.getUserId(), productId);
-        System.out.println("add-review called");
-        System.out.println(user);
 
         return "redirect:/product/" + productId;
     }
@@ -73,7 +68,7 @@ public class ProductController {
     public String filter(@RequestParam String name,
                          Model model,
                          HttpSession session) {
-        List<ProductModel> products = this.productService.findAll();
+        List<ProductModel> products = this.productService.listProducts();
         List<ProductModel> filteredProducts = new ArrayList<>();
 
         for (ProductModel productModel : products) {

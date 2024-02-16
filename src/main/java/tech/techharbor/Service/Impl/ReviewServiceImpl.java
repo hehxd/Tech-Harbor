@@ -30,7 +30,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewModel create(Integer rating, String description, Integer customerId, Integer productId) {
-        ReviewModel review = new ReviewModel(rating,description,customerId,productId);
+        ReviewModel review = new ReviewModel(rating, description, customerId, productId);
         return this.reviewRepository.save(review);
     }
 

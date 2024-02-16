@@ -1,6 +1,7 @@
 package tech.techharbor.Model.EmbeddedClasses;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,11 +14,6 @@ public class VehicleIsUsedForDeliverClass implements Serializable {
 
     @Column(name = "delivery_id", nullable = false)
     private Integer deliveryId;
-
-    public VehicleIsUsedForDeliverClass(Integer vehicleId, Integer deliveryId) {
-        this.vehicleId = vehicleId;
-        this.deliveryId = deliveryId;
-    }
 
     public VehicleIsUsedForDeliverClass() {
     }

@@ -7,7 +7,6 @@ import tech.techharbor.Repository.ProductRepository;
 import tech.techharbor.Service.ProductService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -30,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductModel create(String name, String description, Integer price, Integer warranty) {
-        ProductModel product = new ProductModel(name,description,warranty,price);
+        ProductModel product = new ProductModel(name, description, warranty, price);
         return this.productRepository.save(product);
     }
 
@@ -51,17 +50,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductModel> findAllProductsWithIds (List<Integer> productIds) {
+    public List<ProductModel> findAllProductsWithIds(List<Integer> productIds) {
         return this.productRepository.findAllByProductIdIn(productIds);
     }
 
-    @Override
-    public List<ProductModel> findAllByNameLike(String name) {
-        return this.productRepository.findAllByProductNameLike(name);
-    }
-
-    @Override
-    public List<ProductModel> findAll() {
-        return this.productRepository.findAll();
-    }
 }

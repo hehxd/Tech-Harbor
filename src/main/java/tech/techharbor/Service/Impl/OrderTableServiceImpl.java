@@ -19,18 +19,13 @@ public class OrderTableServiceImpl implements OrderTableService {
     }
 
     @Override
-    public List<OrderTableModel> listOrders() {
-        return this.orderTableRepository.findAll();
-    }
-
-    @Override
     public OrderTableModel findById(Integer id) {
         return this.orderTableRepository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
     }
 
     @Override
     public OrderTableModel create(String orderStatus, Date date, Integer customerId) {
-        OrderTableModel order = new OrderTableModel(orderStatus, (java.sql.Date) date,customerId);
+        OrderTableModel order = new OrderTableModel(orderStatus, (java.sql.Date) date, customerId);
         return this.orderTableRepository.save(order);
     }
 

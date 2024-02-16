@@ -1,11 +1,13 @@
 package tech.techharbor.Model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.sql.Date;
 import java.util.Objects;
 
 @Entity
+@Data
 @Table(name = "vehicle", schema = "project", catalog = "db_202324z_va_prj_techharbor")
 public class VehicleModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,46 +15,14 @@ public class VehicleModel {
     @Column(name = "vehicle_id", nullable = false)
     private Integer vehicleId;
     @Basic
-    @Column(name = "vehicle_model", nullable = true, length = 100)
+    @Column(name = "vehicle_model", length = 100)
     private String vehicleModel;
     @Basic
-    @Column(name = "vehicle_service", nullable = true)
+    @Column(name = "vehicle_service")
     private Date vehicleService;
     @Basic
     @Column(name = "delivery_man_id", nullable = false)
     private Integer deliveryManId;
-
-    public Integer getVehicleId() {
-        return vehicleId;
-    }
-
-    public void setVehicleId(Integer vehicleId) {
-        this.vehicleId = vehicleId;
-    }
-
-    public String getVehicleModel() {
-        return vehicleModel;
-    }
-
-    public void setVehicleModel(String vehicleModel) {
-        this.vehicleModel = vehicleModel;
-    }
-
-    public Date getVehicleService() {
-        return vehicleService;
-    }
-
-    public void setVehicleService(Date vehicleService) {
-        this.vehicleService = vehicleService;
-    }
-
-    public Integer getDeliveryManId() {
-        return deliveryManId;
-    }
-
-    public void setDeliveryManId(Integer deliveryManId) {
-        this.deliveryManId = deliveryManId;
-    }
 
     @Override
     public boolean equals(Object o) {

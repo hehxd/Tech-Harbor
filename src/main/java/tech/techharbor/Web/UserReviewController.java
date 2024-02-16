@@ -23,24 +23,25 @@ public class UserReviewController {
         this.reviewService = reviewService;
         this.productService = productService;
     }
+
     @GetMapping("/reviews/{id}")
-    public String showUserReviews(@PathVariable Integer id, Model model,HttpSession session){
+    public String showUserReviews(@PathVariable Integer id, Model model, HttpSession session) {
         UserTableModel user = (UserTableModel) session.getAttribute("user");
         model.addAttribute("user", user);
         List<ReviewModel> allReviews = reviewService.listReviews();
         List<ReviewModel> reviews = new ArrayList<>();
-        List<ProductModel> products=new ArrayList<>();
+        List<ProductModel> products = new ArrayList<>();
         for (ReviewModel review : allReviews) {
 
-            if(review.getCustomerId().equals(user.getUserId())) {
+            if (review.getCustomerId().equals(user.getUserId())) {
                 reviews.add(review);
                 ProductModel product = productService.findById(review.getProductId());
                 products.add(product);
             }
         }
-        model.addAttribute("reviews",reviews);
+        model.addAttribute("reviews", reviews);
         model.addAttribute("products", products);
-        model.addAttribute("index",0);
+        model.addAttribute("index", 0);
         return "myReviews";
     }
 

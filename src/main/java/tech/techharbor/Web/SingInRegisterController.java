@@ -8,12 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tech.techharbor.Model.CustomerModel;
 import tech.techharbor.Model.DeliveryManModel;
-import tech.techharbor.Model.DeliveryModel;
 import tech.techharbor.Model.UserTableModel;
 import tech.techharbor.Repository.CustomerRepository;
 import tech.techharbor.Repository.DeliveryManRepository;
 import tech.techharbor.Service.UserService;
-
 
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -56,14 +54,14 @@ public class SingInRegisterController {
             throw new IllegalArgumentException("Invalid email address");
 
 
-        if(password.equals(confirmPassword)) {
+        if (password.equals(confirmPassword)) {
             userService.create(name, username, email, passwordEncoder.encode(password), phoneNumber);
         }
         return "redirect:/login";
     }
 
     @GetMapping("/login")
-    public String loginUser(){
+    public String loginUser() {
 
         return "signIn";
     }
@@ -79,31 +77,26 @@ public class SingInRegisterController {
 
         Optional<DeliveryManModel> deliveryMan = deliveryManRepository.findById(user.getUserId());
 
-        if(passwordEncoder.matches(password,user.getPassword())) {
+        if (passwordEncoder.matches(password, user.getPassword())) {
             if (deliveryMan.isEmpty()) {
                 CustomerModel customer = new CustomerModel(user.getUserId());
                 customerRepository.save(customer);
                 session.setAttribute("user", user);
-            }
-            else {
+            } else {
                 DeliveryManModel deliveryManUser = new DeliveryManModel(deliveryMan.get().getUserId());
                 deliveryManRepository.save(deliveryManUser);
                 session.setAttribute("deliveryMan", user);
             }
             return "redirect:/";
         }
-
-
         return "redirect:/login";
     }
-
 
     @GetMapping("/logout")
     public String logoutUser(HttpSession session) {
         session.invalidate();
         return "redirect:/";
     }
-
 
 
 }

@@ -9,14 +9,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootApplication
 public class TechHarborApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TechHarborApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(TechHarborApplication.class, args);
+    }
 
-	@Bean
-	PasswordEncoder passwordEncoder()
-	{
-		return new BCryptPasswordEncoder(10);
-	}
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(10);
+    }
 
 }

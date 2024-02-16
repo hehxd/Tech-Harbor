@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface ReviewService {
     List<ReviewModel> listReviews();
+
     Optional<ReviewModel> findById(Integer id);
 
     ReviewModel create(Integer rating, String description, Integer customerId, Integer productId);

@@ -29,13 +29,8 @@ public class SubcategoryServiceImpl implements SubcategoryService {
 
     @Override
     public SubcategoryModel create(String subcategoryName, Integer categoryId) {
-        SubcategoryModel subcategory = new SubcategoryModel(subcategoryName,categoryId);
+        SubcategoryModel subcategory = new SubcategoryModel(subcategoryName, categoryId);
         return subcategoryRepository.save(subcategory);
     }
 
-    @Override
-    public SubcategoryModel findBySubcategoryNameLike(String subcategoryName) {
-        String nameLike = "%" + subcategoryName + "%";
-        return subcategoryRepository.findBySubcategoryNameLike(nameLike);
-    }
 }

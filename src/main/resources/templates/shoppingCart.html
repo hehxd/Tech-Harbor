@@ -69,7 +69,8 @@
             <tbody>
             <tr th:each="cartItem : ${cartItems}" class="text-center bg-white hover:bg-gray-100">
                 <td class="px-4 py-2">
-                    <img th:src="${cartItem.productImage}" alt="Product Image" class="m-auto w-32 h-32 rounded-lg object-cover">
+                    <img th:src="${cartItem.productImage}" alt="Product Image"
+                         class="m-auto w-32 h-32 rounded-lg object-cover">
                 </td>
                 <td class="px-4 py-2">
                     <a th:href="@{'/product/{id}' (id=${cartItem.productId})}" class="font-bold hover:text-emerald-500">
@@ -83,14 +84,15 @@
                     <span th:text="${cartItem.productPrice} + ' ден.'"></span>
                 </td>
                 <td class="px-4 py-2">
-                    <a th:with="orderId=${cartItem.getProductId()}" th:href="@{'/removeFromShoppingCart/' + ${orderId}}" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Remove</a>
+                    <a th:with="orderId=${cartItem.getProductId()}" th:href="@{'/removeFromShoppingCart/' + ${orderId}}"
+                       class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Remove</a>
                 </td>
             </tr>
             </tbody>
 
         </table>
         <div class="flex items-center justify-end mt-4">
-        <span class="font-bold text-lg mr-8" th:text="'Total: ' + ${grandTotal} + ' ден.'"></span>
+            <span class="font-bold text-lg mr-8" th:text="'Total: ' + ${grandTotal} + ' ден.'"></span>
             <a th:href="@{'/checkout'}" class="px-4 py-2 bg-emerald-500 text-white rounded-md hover:bg-emerald-600">Checkout</a>
         </div>
     </div>

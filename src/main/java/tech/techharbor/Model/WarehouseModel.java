@@ -1,10 +1,12 @@
 package tech.techharbor.Model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Objects;
 
 @Entity
+@Data
 @Table(name = "warehouse", schema = "project", catalog = "db_202324z_va_prj_techharbor")
 public class WarehouseModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,22 +16,6 @@ public class WarehouseModel {
     @Basic
     @Column(name = "warehouse_location", nullable = false, length = 100)
     private String warehouseLocation;
-
-    public Integer getWarehouseId() {
-        return warehouseId;
-    }
-
-    public void setWarehouseId(Integer warehouseId) {
-        this.warehouseId = warehouseId;
-    }
-
-    public String getWarehouseLocation() {
-        return warehouseLocation;
-    }
-
-    public void setWarehouseLocation(String warehouseLocation) {
-        this.warehouseLocation = warehouseLocation;
-    }
 
     @Override
     public boolean equals(Object o) {

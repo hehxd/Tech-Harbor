@@ -27,10 +27,6 @@ public class ReviewModel {
     private Integer productId;
 
 
-    public Integer getProductId() {
-        return productId;
-    }
-
     public ReviewModel(Integer reviewRating, String reviewDescription, Integer customerId, Integer productId) {
         this.reviewRating = reviewRating;
         this.reviewDescription = reviewDescription;

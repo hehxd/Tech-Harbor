@@ -33,7 +33,7 @@ public class UserOrdersController {
     }
 
     @GetMapping("/orders/{id}")
-    public String showUserOrders(@PathVariable Integer id,Model model,HttpSession session) {
+    public String showUserOrders(@PathVariable Integer id, Model model, HttpSession session) {
 
         UserTableModel user = (UserTableModel) session.getAttribute("user");
         model.addAttribute("user", user);
@@ -44,9 +44,9 @@ public class UserOrdersController {
         List<OrderTableModel> allOrders = new ArrayList<>();
         List<ProductModel> products = new ArrayList<>();
 
-        for (OrderTableModel order :orders) {
-            for(OrderTableContainsProductModel orderProducts : ordersWithProducts){
-                if(Objects.equals(order.getOrderId(), orderProducts.getOrderTableContainsProductClass().getOrderId())){
+        for (OrderTableModel order : orders) {
+            for (OrderTableContainsProductModel orderProducts : ordersWithProducts) {
+                if (Objects.equals(order.getOrderId(), orderProducts.getOrderTableContainsProductClass().getOrderId())) {
                     allOrders.add(order);
                     finalOrderList.add(orderProducts);
                     products.add(productService.findById(orderProducts.getOrderTableContainsProductClass().getProductId()));
@@ -55,10 +55,10 @@ public class UserOrdersController {
         }
 
 
-        if(!finalOrderList.isEmpty() || !products.isEmpty()) {
+        if (!finalOrderList.isEmpty() || !products.isEmpty()) {
             model.addAttribute("orderList", finalOrderList);
             model.addAttribute("products", products);
-            model.addAttribute("orders",allOrders);
+            model.addAttribute("orders", allOrders);
         }
 
 

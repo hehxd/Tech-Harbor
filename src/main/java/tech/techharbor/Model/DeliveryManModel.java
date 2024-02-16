@@ -1,10 +1,12 @@
 package tech.techharbor.Model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Objects;
 
 @Entity
+@Data
 @Table(name = "delivery_man", schema = "project", catalog = "db_202324z_va_prj_techharbor")
 public class DeliveryManModel {
     @Id
@@ -17,14 +19,6 @@ public class DeliveryManModel {
     }
 
     public DeliveryManModel() {
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
     }
 
     @Override

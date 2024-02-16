@@ -29,7 +29,8 @@
                 <a th:href="@{'/reviews/{id}' (id=${user.userId})}" class="hover:text-emerald-500">My Reviews</a>
             </li>
             <li th:if="${deliveryMan != null}">
-                <a th:href="@{'/myDeliveries/{id}' (id=${deliveryMan.userId})}" class="hover:text-emerald-500">My Deliveries</a>
+                <a th:href="@{'/myDeliveries/{id}' (id=${deliveryMan.userId})}" class="hover:text-emerald-500">My
+                    Deliveries</a>
             </li>
         </ul>
         <ul class="flex space-x-4">
@@ -58,34 +59,43 @@
 
 <main class="container mx-auto mt-8 flex-grow">
 
-<div class="max-w-5xl mx-auto py-8">
-    <div class="center"> <!-- Added mx-auto to center the content -->
-        <div class="bg-white p-8 rounded-md shadow-md flex items-center justify-between">
-            <div>
-                <h2 class="text-3xl font-semibold mb-4">About Us</h2>
-                <p class="text-lg leading-relaxed">
-                    This is a group project by the name TechHarbor where we were striving to develop a more modern web
-                    application that allows users to buy products online that will be delivered to their address. The
-                    online application will provide a detailed overview of the products, which will be categorized to
-                    simplify the search process.
-                </p>
-                <p class="text-lg leading-relaxed mt-4">
-                    When entering the application, users with an existing user account will be able to easily log in and
-                    access all functionalities, for new users, the application enables quick and simple registration,
-                    which will enable the purchase of products and their delivery.
-                </p>
-                <p class="text-lg leading-relaxed mt-4">
-                    It is important to emphasize that with our web application, users are not required to log in to the
-                    site to view the products that are available. It's easy to use the app as a guest, but in this way,
-                    users don't have the option to buy the products. This functionality gives users the freedom to test
-                    the application before deciding to create their own account that allows the use of all the advanced
-                    functionalities that the application offers.
-                </p>
+    <div class="max-w-5xl mx-auto py-8">
+        <div class="center"> <!-- Added mx-auto to center the content -->
+            <div class="bg-white p-8 rounded-md shadow-md flex items-center justify-between">
+                <div>
+                    <h2 class="text-3xl font-semibold mb-4">About Us</h2>
+                    <p class="text-lg leading-relaxed">
+                        This is a group project by the name TechHarbor where we were striving to develop a more modern
+                        web
+                        application that allows users to buy products online that will be delivered to their address.
+                        The
+                        online application will provide a detailed overview of the products, which will be categorized
+                        to
+                        simplify the search process.
+                    </p>
+                    <p class="text-lg leading-relaxed mt-4">
+                        When entering the application, users with an existing user account will be able to easily log in
+                        and
+                        access all functionalities, for new users, the application enables quick and simple
+                        registration,
+                        which will enable the purchase of products and their delivery.
+                    </p>
+                    <p class="text-lg leading-relaxed mt-4">
+                        It is important to emphasize that with our web application, users are not required to log in to
+                        the
+                        site to view the products that are available. It's easy to use the app as a guest, but in this
+                        way,
+                        users don't have the option to buy the products. This functionality gives users the freedom to
+                        test
+                        the application before deciding to create their own account that allows the use of all the
+                        advanced
+                        functionalities that the application offers.
+                    </p>
+                </div>
+                <img src="/images/logo.png" alt="Logo" class="object-cover h-52 w-52 rounded-lg">
             </div>
-            <img src="/images/logo.png" alt="Logo" class="object-cover h-52 w-52 rounded-lg">
         </div>
     </div>
-</div>
 
 </main>
 

@@ -29,7 +29,8 @@
                 <a th:href="@{'/reviews/{id}' (id=${user.userId})}" class="hover:text-emerald-500">My Reviews</a>
             </li>
             <li th:if="${deliveryMan != null}">
-                <a th:href="@{'/myDeliveries/{id}' (id=${deliveryMan.userId})}" class="text-emerald-500 hover:text-emerald-500">My Deliveries</a>
+                <a th:href="@{'/myDeliveries/{id}' (id=${deliveryMan.userId})}"
+                   class="text-emerald-500 hover:text-emerald-500">My Deliveries</a>
             </li>
         </ul>
         <ul class="flex space-x-4">
@@ -88,14 +89,18 @@
                 </td>
                 <td class="px-4 py-2">
                     <form id="deliveryForm" action="/update-delivery-status" method="post">
-                        <input type="hidden" name="deliveryId" th:value="${delivery.deliveryId}" />
-                        <input type="hidden" name="orderId" th:value="${delivery.orderId}" />
+                        <input type="hidden" name="deliveryId" th:value="${delivery.deliveryId}"/>
+                        <input type="hidden" name="orderId" th:value="${delivery.orderId}"/>
                         <label>
                             <select id="deliveryStatusSelect" name="newStatus" class="w-full border p-2"
                                     th:classappend="${delivery.deliveryStatus == 'Delivered'} ? 'bg-green-200' : 'bg-orange-200'"
-                                    onchange="this.form.submit()" th:disabled="${delivery.deliveryStatus == 'Delivered'}">
-                                <option value="Pending" th:selected="${delivery.deliveryStatus == 'Pending'}">Pending</option>
-                                <option value="Delivered" th:selected="${delivery.deliveryStatus == 'Delivered'}">Delivered</option>
+                                    onchange="this.form.submit()"
+                                    th:disabled="${delivery.deliveryStatus == 'Delivered'}">
+                                <option value="Pending" th:selected="${delivery.deliveryStatus == 'Pending'}">Pending
+                                </option>
+                                <option value="Delivered" th:selected="${delivery.deliveryStatus == 'Delivered'}">
+                                    Delivered
+                                </option>
                             </select>
                         </label>
                     </form>

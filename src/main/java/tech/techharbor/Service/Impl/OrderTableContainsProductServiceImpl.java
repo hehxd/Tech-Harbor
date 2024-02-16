@@ -16,7 +16,6 @@ public class OrderTableContainsProductServiceImpl implements OrderTableContainsP
         this.orderTableContainsProductRepository = orderTableContainsProductRepository;
     }
 
-
     @Override
     public List<OrderTableContainsProductModel> listAll() {
         return this.orderTableContainsProductRepository.findAll();
@@ -24,8 +23,8 @@ public class OrderTableContainsProductServiceImpl implements OrderTableContainsP
 
     @Override
     public OrderTableContainsProductModel create(Integer orderId, Integer productId, Integer quantity) {
-        OrderTableContainsProductClass embededId = new OrderTableContainsProductClass(orderId,productId);
-        OrderTableContainsProductModel order = new OrderTableContainsProductModel(embededId,quantity);
+        OrderTableContainsProductClass embededId = new OrderTableContainsProductClass(orderId, productId);
+        OrderTableContainsProductModel order = new OrderTableContainsProductModel(embededId, quantity);
         return orderTableContainsProductRepository.save(order);
     }
 

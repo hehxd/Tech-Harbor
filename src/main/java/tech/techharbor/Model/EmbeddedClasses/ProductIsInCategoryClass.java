@@ -5,6 +5,7 @@ import jakarta.persistence.Embeddable;
 import lombok.Data;
 
 import java.io.Serializable;
+
 @Data
 @Embeddable
 public class ProductIsInCategoryClass implements Serializable {
@@ -14,11 +15,6 @@ public class ProductIsInCategoryClass implements Serializable {
 
     @Column(name = "category_id", nullable = false)
     private Integer categoryId;
-
-    public ProductIsInCategoryClass(Integer productId, Integer categoryId) {
-        this.productId = productId;
-        this.categoryId = categoryId;
-    }
 
     public ProductIsInCategoryClass() {
     }

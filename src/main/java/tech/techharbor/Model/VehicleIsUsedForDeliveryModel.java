@@ -3,6 +3,7 @@ package tech.techharbor.Model;
 import jakarta.persistence.*;
 import lombok.Data;
 import tech.techharbor.Model.EmbeddedClasses.VehicleIsUsedForDeliverClass;
+
 import java.util.Objects;
 
 @Entity
