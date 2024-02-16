@@ -49,6 +49,8 @@ public class ProductController {
         model.addAttribute("reviews", reviews);
         UserTableModel user = (UserTableModel) session.getAttribute("user");
         model.addAttribute("user", user);
+        Object deliveryManObject = session.getAttribute("deliveryMan");
+        model.addAttribute("deliveryMan", deliveryManObject);
         return "productPage";
     }
 
@@ -85,6 +87,8 @@ public class ProductController {
         model.addAttribute("products", productService.listProducts());
         UserTableModel user = (UserTableModel) session.getAttribute("user");
         model.addAttribute("user", user);
+        Object deliveryManObject = session.getAttribute("deliveryMan");
+        model.addAttribute("deliveryMan", deliveryManObject);
 
         return "filterPage";
     }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import tech.techharbor.Model.CategoryModel;
+import tech.techharbor.Model.DeliveryManModel;
 import tech.techharbor.Model.SubcategoryModel;
 import tech.techharbor.Model.UserTableModel;
 import tech.techharbor.Repository.SubcategoryRepository;
@@ -39,7 +40,11 @@ public class HomeController {
         model.addAttribute("products", productService.listProducts());
         UserTableModel user = (UserTableModel) session.getAttribute("user");
         model.addAttribute("user", user);
+        Object deliveryManObject = session.getAttribute("deliveryMan");
+        model.addAttribute("deliveryMan", deliveryManObject);
 
+        System.out.println(deliveryManObject);
+        System.out.println(user);
         return "index";
     }
 

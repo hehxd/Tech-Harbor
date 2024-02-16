@@ -12,6 +12,12 @@ public class CustomerModel {
     @Column(name = "user_id", nullable = false)
     private Integer userId;
 
+    public CustomerModel(Integer userId) {
+        this.userId = userId;
+    }
+    public CustomerModel() {
+    }
+
     public Integer getUserId() {
         return userId;
     }

@@ -26,7 +26,8 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 font-sans">
+<body class="font-sans antialiased bg-gray-100 flex flex-col min-h-screen">
+
 <!-- Navbar -->
 <nav class="bg-gray-800 text-white p-4 text-lg sm:text-xl"> <!-- Responsive font size -->
     <div class="container mx-auto flex justify-between items-center">
@@ -35,7 +36,7 @@
             <h1 class="text-2xl font-semibold ml-4 sm:text-3xl">Tech Harbor</h1> <!-- Responsive font size -->
         </div>
         <ul class="flex space-x-8">
-            <li><a href="/" class="hover:text-emerald-500">Home</a></li>
+            <li><a href="/" class="text-emerald-500 hover:text-emerald-500">Home</a></li>
             <li><a th:href="@{'/aboutUs'}" class="hover:text-emerald-500">About Us</a></li>
             <li th:if="${user != null}">
                 <a th:href="@{'/orders/{id}' (id=${user.userId})}" class="hover:text-emerald-500">My Orders</a>
@@ -43,27 +44,36 @@
             <li th:if="${user != null}">
                 <a th:href="@{'/reviews/{id}' (id=${user.userId})}" class="hover:text-emerald-500">My Reviews</a>
             </li>
+            <li th:if="${deliveryMan != null}">
+                <a th:href="@{'/myDeliveries/{id}' (id=${deliveryMan.userId})}" class="hover:text-emerald-500">My Deliveries</a>
+            </li>
         </ul>
         <ul class="flex space-x-4">
             <li th:if="${user != null}">
                 <span>Welcome  <span th:text="${user.nameUser}"></span></span>
             </li>
+            <li th:if="${deliveryMan != null}">
+                <span>Welcome Delivery Man <span th:text="${deliveryMan.nameUser}"></span></span>
+            </li>
             <li th:if="${user != null}">
                 <a th:href="@{'/shoppingCart'}"><i class="fa-solid fa-cart-shopping"></i></a>
             </li>
-            <li th:if="${user != null}">
+            <li th:if="${user != null || deliveryMan != null}">
                 <a class="hover:text-emerald-500" th:href="@{/logout}">Log out</a>
             </li>
-            <li th:if="${user == null}">
+            <li th:if="${user == null && deliveryMan == null}">
                 <a th:href="@{/login}" class="hover:text-emerald-500">Sign In</a>
             </li>
-            <li th:if="${user == null}">
+            <li th:if="${user == null && deliveryMan == null}">
                 <a th:href="@{/register}" class="hover:text-emerald-500">Register</a>
             </li>
         </ul>
 
     </div>
 </nav>
+
+<main class="container mx-auto mt-8 flex-grow">
+
 
 <!-- Main Content -->
 <div class="container mx-auto mt-8">
@@ -78,7 +88,7 @@
                        th:value="${cat.categoryId}"
                        th:href="@{'/category/' + ${cat.categoryName}}"
                        th:id="${cat.categoryId}"
-                       class="text-white-500 hover:text-emerald-500">
+                       th:classappend="${selectedCategory.equals(cat.categoryName)} ? 'text-emerald-500 hover:text-emerald-500' : 'hover:text-emerald-500'">
                     </a>
                     <div class="subcategory ml-8"> <!-- Separate div for subcategories -->
                         <ul>
@@ -116,7 +126,7 @@
                     <img src="../static/images/intel_core_i7.jpg" th:src="${product.productImage}" alt="Product Image"
                          class="mb-4 rounded-lg object-scale-down h-48 w-96">
                     <a th:href="@{'/product/{id}' (id=${product.productId})}">
-                        <h3 th:text="${product.productName}" class="font-semibold text-lg mb-2">asd</h3>
+                        <h3 th:text="${product.productName}" class="font-semibold text-lg mb-2"></h3>
                     </a>
                     <p th:attr="title=${product.productDescription}" class="text-gray-600 overflow-hidden"
                        style="height: 150px;">
@@ -134,7 +144,8 @@
         </div>
     </div>
 </div>
-</body>
+</main>
+
 <!-- Footer -->
 <footer class="bg-white rounded-lg shadow m-4 dark:bg-gray-800">
     <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
@@ -153,5 +164,5 @@
         </ul>
     </div>
 </footer>
-
+</body>
 </html>

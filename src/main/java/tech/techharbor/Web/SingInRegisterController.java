@@ -7,11 +7,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tech.techharbor.Model.CustomerModel;
+import tech.techharbor.Model.DeliveryManModel;
+import tech.techharbor.Model.DeliveryModel;
 import tech.techharbor.Model.UserTableModel;
 import tech.techharbor.Repository.CustomerRepository;
+import tech.techharbor.Repository.DeliveryManRepository;
 import tech.techharbor.Service.UserService;
 
 
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 @Controller
@@ -20,11 +24,14 @@ public class SingInRegisterController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
+    private final DeliveryManRepository deliveryManRepository;
+
     private final CustomerRepository customerRepository;
 
-    public SingInRegisterController(UserService userService, PasswordEncoder passwordEncoder, CustomerRepository customerRepository) {
+    public SingInRegisterController(UserService userService, PasswordEncoder passwordEncoder, DeliveryManRepository deliveryManRepository, CustomerRepository customerRepository) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.deliveryManRepository = deliveryManRepository;
         this.customerRepository = customerRepository;
     }
 
@@ -50,15 +57,7 @@ public class SingInRegisterController {
 
 
         if(password.equals(confirmPassword)) {
-            UserTableModel user = userService.create(name, username, email, passwordEncoder.encode(password), phoneNumber);
-
-            CustomerModel customer = new CustomerModel();
-            System.out.println(user);
-            System.out.println("USER ID " + user.getUserId());
-            customer.setUserId(user.getUserId());
-
-            customerRepository.save(customer);
-            System.out.println();
+            userService.create(name, username, email, passwordEncoder.encode(password), phoneNumber);
         }
         return "redirect:/login";
     }
@@ -78,9 +77,19 @@ public class SingInRegisterController {
         if (user == null)
             throw new IllegalArgumentException("Invalid username");
 
-        if(passwordEncoder.matches(password,user.getPassword())) {
-            session.setAttribute("user",user);
+        Optional<DeliveryManModel> deliveryMan = deliveryManRepository.findById(user.getUserId());
 
+        if(passwordEncoder.matches(password,user.getPassword())) {
+            if (deliveryMan.isEmpty()) {
+                CustomerModel customer = new CustomerModel(user.getUserId());
+                customerRepository.save(customer);
+                session.setAttribute("user", user);
+            }
+            else {
+                DeliveryManModel deliveryManUser = new DeliveryManModel(deliveryMan.get().getUserId());
+                deliveryManRepository.save(deliveryManUser);
+                session.setAttribute("deliveryMan", user);
+            }
             return "redirect:/";
         }
 

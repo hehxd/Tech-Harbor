@@ -52,9 +52,12 @@ public class CategoryController {
         List<ProductModel> productsInCategory = productService.findAllProductsWithIds(productIds);
         model.addAttribute("selectedCategory", name);
         model.addAttribute("categories", allCategories);
+        model.addAttribute("subcategories", subcategoryService.listSubcategories());
         model.addAttribute("products", productsInCategory);
         UserTableModel user = (UserTableModel) session.getAttribute("user");
         model.addAttribute("user", user);
+        Object deliveryManObject = session.getAttribute("deliveryMan");
+        model.addAttribute("deliveryMan", deliveryManObject);
         return "categoryPage";
     }
 
@@ -83,6 +86,8 @@ public class CategoryController {
         model.addAttribute("products", productsInCategory);
         UserTableModel user = (UserTableModel) session.getAttribute("user");
         model.addAttribute("user", user);
+        Object deliveryManObject = session.getAttribute("deliveryMan");
+        model.addAttribute("deliveryMan", deliveryManObject);
         return "categoryPage";
     }
 

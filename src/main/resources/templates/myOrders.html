@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="./output.css" rel="stylesheet">
 </head>
-<body class="font-sans antialiased bg-gray-100">
+
+<body class="font-sans antialiased bg-gray-100 flex flex-col min-h-screen">
 
 <nav class="bg-gray-800 text-white p-4 text-lg sm:text-xl"> <!-- Responsive font size -->
     <div class="container mx-auto flex justify-between items-center">
@@ -48,6 +49,9 @@
     </div>
 </nav>
 
+<main class="container mx-auto mt-8 flex-grow">
+
+
 <div class="max-w-5xl mx-auto py-8 grid grid-cols-1 md:grid-cols-2 gap-4 font-sans mb-auto">
     <div class="card bg-gray-700 p-4 rounded-md shadow-md text-white col-span-1 md:col-span-full">
         <table class="w-full text-left border-collapse border border-gray-800">
@@ -74,9 +78,9 @@
         </table>
     </div>
 </div>
+</main>
 
 
-</body>
 
 <!-- Footer -->
 <footer class="bg-white rounded-lg shadow m-4 dark:bg-gray-800">
@@ -96,5 +100,6 @@
         </ul>
     </div>
 </footer>
+</body>
 
 </html>

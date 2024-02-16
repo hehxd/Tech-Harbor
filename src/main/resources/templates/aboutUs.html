@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="./output.css" rel="stylesheet">
 </head>
-<body class="font-sans antialiased bg-gray-100">
+
+<body class="font-sans antialiased bg-gray-100 flex flex-col min-h-screen">
 
 <!-- Navbar -->
 <nav class="bg-gray-800 text-white p-4 text-lg sm:text-xl"> <!-- Responsive font size -->
@@ -19,29 +20,35 @@
             <h1 class="text-2xl font-semibold ml-4 sm:text-3xl">Tech Harbor</h1> <!-- Responsive font size -->
         </div>
         <ul class="flex space-x-8">
-            <li><a href="/" class="hover:text-emerald-500">Home</a></li>
-            <li><a th:href="@{'/aboutUs'}" class="text-emerald-500 hover:text-emerald-500">About Us</a></li>
+            <li><a href="/" class="text-emerald-500 hover:text-emerald-500">Home</a></li>
+            <li><a th:href="@{'/aboutUs'}" class="hover:text-emerald-500">About Us</a></li>
             <li th:if="${user != null}">
                 <a th:href="@{'/orders/{id}' (id=${user.userId})}" class="hover:text-emerald-500">My Orders</a>
             </li>
             <li th:if="${user != null}">
                 <a th:href="@{'/reviews/{id}' (id=${user.userId})}" class="hover:text-emerald-500">My Reviews</a>
             </li>
+            <li th:if="${deliveryMan != null}">
+                <a th:href="@{'/myDeliveries/{id}' (id=${deliveryMan.userId})}" class="hover:text-emerald-500">My Deliveries</a>
+            </li>
         </ul>
         <ul class="flex space-x-4">
             <li th:if="${user != null}">
                 <span>Welcome  <span th:text="${user.nameUser}"></span></span>
             </li>
+            <li th:if="${deliveryMan != null}">
+                <span>Welcome Delivery Man <span th:text="${deliveryMan.nameUser}"></span></span>
+            </li>
             <li th:if="${user != null}">
                 <a th:href="@{'/shoppingCart'}"><i class="fa-solid fa-cart-shopping"></i></a>
             </li>
-            <li th:if="${user != null}">
+            <li th:if="${user != null || deliveryMan != null}">
                 <a class="hover:text-emerald-500" th:href="@{/logout}">Log out</a>
             </li>
-            <li th:if="${user == null}">
+            <li th:if="${user == null && deliveryMan == null}">
                 <a th:href="@{/login}" class="hover:text-emerald-500">Sign In</a>
             </li>
-            <li th:if="${user == null}">
+            <li th:if="${user == null && deliveryMan == null}">
                 <a th:href="@{/register}" class="hover:text-emerald-500">Register</a>
             </li>
         </ul>
@@ -49,6 +56,7 @@
     </div>
 </nav>
 
+<main class="container mx-auto mt-8 flex-grow">
 
 <div class="max-w-5xl mx-auto py-8">
     <div class="center"> <!-- Added mx-auto to center the content -->
@@ -79,7 +87,9 @@
         </div>
     </div>
 </div>
-</body>
+
+</main>
+
 
 <!-- Footer -->
 <footer class="bg-white rounded-lg shadow m-4 dark:bg-gray-800">
@@ -99,5 +109,7 @@
         </ul>
     </div>
 </footer>
+
+</body>
 
 </html>

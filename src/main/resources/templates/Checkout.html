@@ -8,9 +8,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <!-- Tailwind CSS from CDN for development purposes -->
   <script src="https://cdn.tailwindcss.com"></script>
+
   <link href="./output.css" rel="stylesheet">
 </head>
-<body class="font-sans antialiased bg-gray-100">
+<body class="font-sans antialiased bg-gray-100 flex flex-col min-h-screen">
 
 <nav class="bg-gray-800 text-white p-4 text-lg sm:text-xl"> <!-- Responsive font size -->
   <div class="container mx-auto flex justify-between items-center">
@@ -19,7 +20,7 @@
       <h1 class="text-2xl font-semibold ml-4 sm:text-3xl">Tech Harbor</h1> <!-- Responsive font size -->
     </div>
     <ul class="flex space-x-8">
-      <li><a href="/" class="text-emerald-500 hover:text-emerald-500">Home</a></li>
+      <li><a href="/" class="hover:text-emerald-500">Home</a></li>
       <li><a th:href="@{'/aboutUs'}" class="hover:text-emerald-500">About Us</a></li>
       <li th:if="${user != null}">
         <a th:href="@{'/orders/{id}' (id=${user.userId})}" class="hover:text-emerald-500">My Orders</a>
@@ -49,6 +50,9 @@
   </div>
 </nav>
 
+<main class="container mx-auto mt-8 flex-grow">
+
+<form th:method="get" th:action="@{'/finalizeOrder'}">
 <div class="max-w-5xl mx-auto py-8 grid grid-cols-1 md:grid-cols-2 gap-4 font-sans mb-auto">
   <!-- Billing Details -->
   <div class="p-4">
@@ -63,8 +67,8 @@
         <input type="email" id="email" name="email" class="w-full border p-2">
       </div>
       <div class="mb-4">
-        <label for="postalcode" class="block text-gray-700">Postal Code</label>
-        <input type="text" id="postalcode" name="postalcode" class="w-full border p-2">
+        <label for="address" class="block text-gray-700">Address</label>
+        <input type="text" id="address" name="address" class="w-full border p-2">
       </div>
       <div class="mb-4">
         <label for="country" class="block text-gray-700">Country</label>
@@ -74,14 +78,24 @@
         <label for="phonenumber" class="block text-gray-700">Phone Number</label>
         <input type="tel" id="phonenumber" name="phonenumber" class="w-full border p-2">
       </div>
-      <div class="mb-4">
-        <label for="city" class="block text-gray-700">City</label>
-        <input type="text" id="city" name="city" class="w-full border p-2">
+      <div class="mb-4 flex">
+        <div class="mr-2 w-1/2">
+          <label for="city" class="block text-gray-700">City</label>
+          <input type="text" id="city" name="city" class="w-full border p-2">
+        </div>
+        <div class="ml-2 w-1/2">
+          <label for="postalcode" class="block text-gray-700">Postal Code</label>
+          <input type="text" id="postalcode" name="postalcode" class="w-full border p-2">
+        </div>
       </div>
       <!-- Add other billing details fields as needed -->
 
       <!-- Credit Card Details -->
       <h2 class="text-2xl font-semibold mb-4 mt-8">Credit Card Details</h2>
+      <div class="mb-4">
+        <label for="cardholdername" class="block text-gray-700">Card Holder Name</label>
+        <input type="text" id="cardholdername" name="cardholdername" class="w-full border p-2">
+      </div>
       <div class="mb-4">
         <label for="cardnumber" class="block text-gray-700">Card Number</label>
         <input type="text" id="cardnumber" name="cardnumber" class="w-full border p-2">
@@ -115,10 +129,13 @@
 
     <div class="flex items-center justify-end mt-4">
       <span class="font-bold text-lg mr-8" th:text="'Total: ' + ${grandTotal} + ' ден.'"></span>
-      <a th:href="@{'/finalizeOrder'}" class="px-4 py-2 bg-emerald-500 text-white rounded-md hover:bg-emerald-600">Proceed</a>
+      <button  type="submit" class="px-4 py-2 bg-emerald-500 text-white rounded-md hover:bg-emerald-600">Proceed</button>
     </div>
   </div>
 </div>
+</form>
+
+</main>
 
 <!-- Footer -->
 <footer class="bg-white rounded-lg shadow m-4 dark:bg-gray-800">

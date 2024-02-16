@@ -5,9 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import tech.techharbor.Model.OrderTableModel;
 import tech.techharbor.Model.ProductModel;
 import tech.techharbor.Model.UserTableModel;
+import tech.techharbor.Service.DeliveryService;
 import tech.techharbor.Service.OrderTableContainsProductService;
 import tech.techharbor.Service.OrderTableService;
 import tech.techharbor.Service.ProductService;
@@ -24,10 +26,13 @@ public class ShoppingCartController {
     private final OrderTableService orderTableService;
     private final OrderTableContainsProductService orderTableContainsProductService;
 
-    public ShoppingCartController(ProductService productService, OrderTableService orderTableService, OrderTableContainsProductService orderTableContainsProductService) {
+    private final DeliveryService deliveryService;
+
+    public ShoppingCartController(ProductService productService, OrderTableService orderTableService, OrderTableContainsProductService orderTableContainsProductService, DeliveryService deliveryService) {
         this.productService = productService;
         this.orderTableService = orderTableService;
         this.orderTableContainsProductService = orderTableContainsProductService;
+        this.deliveryService = deliveryService;
     }
 
     List<ProductModel> shoppingCartList = new ArrayList<>();
@@ -100,14 +105,15 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/finalizeOrder")
-    public String getOrders(HttpSession session){
+    public String getOrders(HttpSession session,
+                            @RequestParam String address){
 
         UserTableModel user = (UserTableModel) session.getAttribute("user");
 
         java.util.Date utilDate = new Date();
         OrderTableModel order = orderTableService.create("Created",new java.sql.Date(utilDate.getTime()),user.getUserId());
         shoppingCartList.forEach(product ->orderTableContainsProductService.create(order.getOrderId(),product.getProductId(),1));
-
+        deliveryService.create("Pending",address,37,order.getOrderId());
         shoppingCartList = new ArrayList<>();
         return "redirect:/orders/" + user.getUserId();
 

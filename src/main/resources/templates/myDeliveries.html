@@ -10,7 +10,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="./output.css" rel="stylesheet">
 </head>
-<body class="font-sans antialiased bg-gray-100">
+
+<body class="font-sans antialiased bg-gray-100 flex flex-col min-h-screen">
 
 <nav class="bg-gray-800 text-white p-4 text-lg sm:text-xl"> <!-- Responsive font size -->
     <div class="container mx-auto flex justify-between items-center">
@@ -22,77 +23,93 @@
             <li><a href="/" class="text-emerald-500 hover:text-emerald-500">Home</a></li>
             <li><a th:href="@{'/aboutUs'}" class="hover:text-emerald-500">About Us</a></li>
             <li th:if="${user != null}">
-                <a th:href="@{'/orders/{id}' (id=${user.userId})}" class="hover:text-emerald-500">My Deliveries</a>
+                <a th:href="@{'/orders/{id}' (id=${user.userId})}" class="hover:text-emerald-500">My Orders</a>
+            </li>
+            <li th:if="${user != null}">
+                <a th:href="@{'/reviews/{id}' (id=${user.userId})}" class="hover:text-emerald-500">My Reviews</a>
+            </li>
+            <li th:if="${deliveryMan != null}">
+                <a th:href="@{'/myDeliveries/{id}' (id=${deliveryMan.userId})}" class="hover:text-emerald-500">My Deliveries</a>
             </li>
         </ul>
         <ul class="flex space-x-4">
             <li th:if="${user != null}">
                 <span>Welcome  <span th:text="${user.nameUser}"></span></span>
             </li>
-            <li th:if="${user != null}">
-                <a><i class="fa-solid fa-cart-shopping"></i></a>
+            <li th:if="${deliveryMan != null}">
+                <span>Welcome Delivery Man <span th:text="${deliveryMan.nameUser}"></span></span>
             </li>
             <li th:if="${user != null}">
+                <a th:href="@{'/shoppingCart'}"><i class="fa-solid fa-cart-shopping"></i></a>
+            </li>
+            <li th:if="${user != null || deliveryMan != null}">
                 <a class="hover:text-emerald-500" th:href="@{/logout}">Log out</a>
             </li>
-            <li th:if="${user == null}">
+            <li th:if="${user == null && deliveryMan == null}">
                 <a th:href="@{/login}" class="hover:text-emerald-500">Sign In</a>
             </li>
-            <li th:if="${user == null}">
+            <li th:if="${user == null && deliveryMan == null}">
                 <a th:href="@{/register}" class="hover:text-emerald-500">Register</a>
             </li>
         </ul>
 
     </div>
 </nav>
-<h2 class="text-2xl font-semibold mb-4 text-center">My Deliveries</h2>
-<div class="max-w-5xl mx-auto py-8 grid grid-cols-1 md:grid-cols-2 gap-4 font-sans mb-auto">
-    <div class="card bg-gray-700 p-4 rounded-md shadow-md text-white col-span-1 md:col-span-full">
-        <table class="w-full text-left border-collapse border border-gray-800">
+
+
+<main class="container mx-auto mt-8 flex-grow">
+
+    <h2 class="text-2xl font-bold mb-4">My Deliveries</h2>
+
+    <div th:if="${deliveries.isEmpty()}" class="text-center p-4">
+        <p>You have no Deliveries.</p>
+    </div>
+
+    <div th:unless="${deliveries.isEmpty()}" class="my-8">
+        <table class="w-full rounded-md border shadow">
             <thead>
-            <tr class="bg-gray-800 text-white text-center">
+            <tr class="text-center">
+                <th class="px-4 py-2">Delivery ID</th>
                 <th class="px-4 py-2">Order ID</th>
-                <th class="px-4 py-2">Order Date</th>
-                <th class="px-4 py-2">Adress</th>
-                <th class="px-4 py-2">Status</th>
+                <th class="px-4 py-2">Delivery Address</th>
+                <th class="px-4 py-2">Delivery Status</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="order,iterator : ${orders}" class="hover:bg-gray-600 text-center">
-                <td class="px-4 py-2 border border-gray-800">[[${order.orderId}]]</td>
-                <td class="px-4 py-2 border border-gray-800">[[${order.orderDate}]]</td>
-                <td class="px-4 py-2 border border-gray-800">[[${order.orderId}]]</td>
-                <td class="px-4 py-2 border border-gray-800">[[${order.orderStatus}]]</td>
+            <tr th:each="delivery : ${deliveries}" class="text-center bg-white hover:bg-gray-100">
+                <td class="px-4 py-2">
+                    <span th:text="${delivery.getDeliveryId()}"></span>
+                </td>
+                <td class="px-4 py-2">
+                    <span th:text="${delivery.getOrderId()}"></span>
+                </td>
+                <td class="px-4 py-2">
+                    <span th:text="${delivery.getDeliveryAddress()}"></span>
+                </td>
+                <td class="px-4 py-2">
+                    <form id="deliveryForm" action="/update-delivery-status" method="post">
+                        <input type="hidden" name="deliveryId" th:value="${delivery.deliveryId}" />
+                        <label>
+                            <select id="deliveryStatusSelect" name="newStatus" class="w-full border p-2"
+                                    th:classappend="${delivery.deliveryStatus == 'Delivered'} ? 'bg-green-200' : 'bg-orange-200'"
+                                    onchange="this.form.submit()" th:disabled="${delivery.deliveryStatus == 'Delivered'}">
+                                <option value="Pending" th:selected="${delivery.deliveryStatus == 'Pending'}">Pending</option>
+                                <option value="Delivered" th:selected="${delivery.deliveryStatus == 'Delivered'}">Delivered</option>
+                            </select>
+                        </label>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>
-        <tbody>
-        <tr th:each="cartItem : ${cartItems}" class="text-center bg-white hover:bg-gray-100">
-            <td class="px-4 py-2">
-                <img th:src="${cartItem.productImage}" alt="Product Image" class="m-auto w-32 h-32 rounded-lg object-cover">
-            </td>
-            <td class="px-4 py-2">
-                <a th:href="@{'/product/{id}' (id=${cartItem.productId})}" class="font-bold hover:text-emerald-500">
-                    <span th:text="${cartItem.productName}"></span>
-                </a>
-            </td>
-            <td class="px-4 py-2">
-                <span th:text="${cartItem.productWarranty} + ' years'"></span>
-            </td>
-            <td class="px-4 py-2">
-                <span th:text="${cartItem.productPrice} + ' ден.'"></span>
-            </td>
-        </tr>
-        </tbody>
-        <a th:href="@{'/finalizeOrder'}" class="px-4 py-2 bg-emerald-500 text-white rounded-md hover:bg-emerald-600">Proceed</a>
     </div>
-</div>
+</main>
 
 <!-- Footer -->
-<footer class="bg-white rounded-lg shadow m-4 dark:bg-gray-800">
+<footer class="bg-white rounded-lg shadow m-4 dark:bg-gray-800 flex-shrink-0">
     <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-      <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 Tech Harbor. All rights reserved.™
-    </span>
+        <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 Tech Harbor. All rights reserved.™
+        </span>
         <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
             <li>
                 <a th:href="@{'/aboutUs'}" class="hover:underline me-4 md:me-6">About</a>
@@ -106,6 +123,7 @@
         </ul>
     </div>
 </footer>
+
 
 </body>
 </html>

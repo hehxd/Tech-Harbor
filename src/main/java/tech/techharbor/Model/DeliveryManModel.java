@@ -7,10 +7,17 @@ import java.util.Objects;
 @Entity
 @Table(name = "delivery_man", schema = "project", catalog = "db_202324z_va_prj_techharbor")
 public class DeliveryManModel {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "user_id", nullable = false)
     private Integer userId;
+
+
+    public DeliveryManModel(Integer userId) {
+        this.userId = userId;
+    }
+
+    public DeliveryManModel() {
+    }
 
     public Integer getUserId() {
         return userId;

@@ -1,10 +1,12 @@
 package tech.techharbor.Model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Objects;
 
 @Entity
+@Data
 @Table(name = "delivery", schema = "project", catalog = "db_202324z_va_prj_techharbor")
 public class DeliveryModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,44 +26,14 @@ public class DeliveryModel {
     @Column(name = "order_id", nullable = false)
     private Integer orderId;
 
-    public Integer getDeliveryId() {
-        return deliveryId;
-    }
-
-    public void setDeliveryId(Integer deliveryId) {
-        this.deliveryId = deliveryId;
-    }
-
-    public String getDeliveryStatus() {
-        return deliveryStatus;
-    }
-
-    public void setDeliveryStatus(String deliveryStatus) {
+    public DeliveryModel(String deliveryStatus, String deliveryAddress, Integer deliveryManId, Integer orderId) {
         this.deliveryStatus = deliveryStatus;
-    }
-
-    public String getDeliveryAddress() {
-        return deliveryAddress;
-    }
-
-    public void setDeliveryAddress(String deliveryAddress) {
         this.deliveryAddress = deliveryAddress;
-    }
-
-    public Integer getDeliveryManId() {
-        return deliveryManId;
-    }
-
-    public void setDeliveryManId(Integer deliveryManId) {
         this.deliveryManId = deliveryManId;
-    }
-
-    public Integer getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Integer orderId) {
         this.orderId = orderId;
+    }
+
+    public DeliveryModel() {
     }
 
     @Override
