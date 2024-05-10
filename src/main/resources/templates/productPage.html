@@ -76,14 +76,14 @@
                             <span th:text="${product.productPrice + ' ден.'}"
                                   class="text-xl font-semibold text-white mr-2">Price:</span>
                         </div>
-                        <div>
+                        <div th:unless="${deliveryMan != null}">
                             <span class="text-lg font-semibold text-white mr-2">Quantity:</span>
                             <label for="quantity"><input type="number" id="quantity" name="quantity" min="1" value="1"
                                                          class="w-16 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></label>
-                            <button type="button"
+                            <a th:href="${user != null} ? @{'/shoppingCart/' + ${product.productId}} : '/login'"
                                     class="px-4 py-2 bg-indigo-500 text-white font-bold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ml-5">
                                 Add to cart
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
